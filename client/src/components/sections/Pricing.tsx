@@ -5,22 +5,22 @@ import { AuditModal } from "@/components/AuditModal";
 const plans = [
   {
     name: "Quick Start",
-    price: "$999",
-    desc: "Perfect for small teams dipping their toes.",
-    features: ["Audit of current tools", "3 Custom Workflows", "1 Training Session", "Slack Support"],
+    price: "₹50,000",
+    desc: "Best for 10-20 devs. ROI in 4 days.",
+    features: ["6 core workflows", "14-day implementation", "Train 3 champions", "30-day support"],
   },
   {
     name: "Growth",
-    price: "$2,499",
-    desc: "For companies ready to scale adoption.",
+    price: "₹2,00,000",
+    desc: "Best for 20-50 devs. ROI in 12 days.",
     popular: true,
-    features: ["Full Tech Stack Audit", "10 Custom Workflows", "3 Department Trainings", "Dedicated Success Manager", "Monthly Optimization"],
+    features: ["Everything in Quick Start", "Quarterly workflow updates", "Monthly training sessions", "Dedicated Slack channel", "Custom workflow creation"],
   },
   {
     name: "Enterprise",
-    price: "Custom",
-    desc: "Full transformation for large orgs.",
-    features: ["Unlimited Workflows", "Custom LLM Fine-tuning", "Security & Compliance", "24/7 Priority Support", "On-premise Deployment"],
+    price: "₹5,00,000+",
+    desc: "Best for 50+ devs. ROI in 8 days.",
+    features: ["Everything in Growth", "Weekly office hours", "Custom integrations", "Real-time analytics", "SLA guarantees", "Success manager"],
   },
 ];
 

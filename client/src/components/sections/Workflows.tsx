@@ -4,33 +4,33 @@ import { CheckCircle2 } from "lucide-react";
 const workflows = [
   {
     title: "Quick Fix",
-    description: "Instant template deployment for common tasks like meeting summaries and email drafting.",
-    color: "from-blue-500 to-cyan-400",
+    description: "Senior dev debugs null pointer: 2 hours. With workflow: 15 minutes. Saved: 1.75 hours per bug.",
+    color: "from-yellow-500 to-orange-400",
   },
   {
-    title: "Complex Ops",
-    description: "Multi-step AI agents that handle data entry, reconciliation, and reporting autonomously.",
+    title: "Complex Issues",
+    description: "Race condition investigation: 1 week. With workflow: 1 day with full trace. Saved: 4 senior dev days.",
+    color: "from-blue-500 to-indigo-500",
+  },
+  {
+    title: "Story Implementation",
+    description: "Feature with best practices: 3 days. With workflow: 1 day, edge cases covered. Saved: 2 days, better quality.",
     color: "from-purple-500 to-pink-500",
   },
   {
-    title: "Creative Studio",
-    description: "Standardized prompting workflows for marketing assets to ensure brand consistency.",
+    title: "Big Refactors",
+    description: "10+ file migration: 5 days, risky. With workflow: 2 days, zero breaks. Saved: 3 days, less risk.",
     color: "from-orange-500 to-red-500",
   },
   {
-    title: "Support Bot",
-    description: "Custom knowledge base trained on your internal wiki to answer employee questions.",
+    title: "Test Coverage",
+    description: "Write comprehensive tests: 4 hours. With workflow: 45 mins, better coverage. Saved: 3.25 hours.",
     color: "from-green-500 to-emerald-400",
   },
   {
-    title: "Sales Intel",
-    description: "Automated prospect research and personalized outreach generation at scale.",
-    color: "from-indigo-500 to-blue-600",
-  },
-  {
-    title: "Legal Check",
-    description: "First-pass contract review and clause extraction to save legal team hours.",
-    color: "from-pink-500 to-rose-400",
+    title: "Version Upgrades",
+    description: "Dependency conflicts: 2 days debugging. With workflow: 3 hours, systematic fix. Saved: 1.5 days.",
+    color: "from-red-500 to-rose-400",
   },
 ];
 

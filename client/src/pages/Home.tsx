@@ -16,9 +16,9 @@ export default function Home() {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="text-xl font-display font-bold flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white">
-              F
+              D
             </div>
-            Fyndfox
+            DevFlow AI
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
             <a href="#problems" className="hover:text-white transition-colors">Problems</a>
@@ -44,17 +44,19 @@ export default function Home() {
         <section className="py-24 bg-zinc-950/50">
           <div className="container px-4 mx-auto">
             <h2 className="text-3xl md:text-5xl font-display font-bold text-center mb-16">
-              The Difference Is <span className="text-primary">Day & Night</span>
+              Real Numbers. <span className="text-primary">90-Person Team.</span>
             </h2>
             <div className="grid md:grid-cols-2 gap-0 max-w-5xl mx-auto border border-white/10 rounded-3xl overflow-hidden">
               <div className="p-12 bg-red-500/5 border-b md:border-b-0 md:border-r border-white/10">
-                <h3 className="text-2xl font-bold text-red-400 mb-8">Before Fyndfox</h3>
+                <h3 className="text-2xl font-bold text-red-400 mb-8">BEFORE DevFlow</h3>
                 <ul className="space-y-4">
                   {[
-                    "Tools gathering dust",
-                    "Security leaks via ChatGPT",
-                    "Zero process documentation",
-                    "Manual data re-entry"
+                    "90 developers",
+                    "₹5L/year on Windsurf",
+                    "<20% adoption",
+                    "10% success rate",
+                    "Negative ROI",
+                    "Frustrated developers"
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-3 text-gray-400">
                       <span className="w-6 h-6 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 text-sm">✕</span>
@@ -64,13 +66,15 @@ export default function Home() {
                 </ul>
               </div>
               <div className="p-12 bg-green-500/5">
-                <h3 className="text-2xl font-bold text-green-400 mb-8">After Fyndfox</h3>
+                <h3 className="text-2xl font-bold text-green-400 mb-8">AFTER DevFlow</h3>
                 <ul className="space-y-4">
                   {[
-                    "90% Adoption Rate",
-                    "Enterprise-grade Security",
-                    "Automated Workflow Playbooks",
-                    "Real-time Data Sync"
+                    "Same 90 developers",
+                    "Same Windsurf",
+                    "80% adoption",
+                    "90% success rate",
+                    "10x ROI",
+                    "Daily active usage"
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-3 text-white font-medium">
                       <span className="w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 text-sm">✓</span>
@@ -79,6 +83,9 @@ export default function Home() {
                   ))}
                 </ul>
               </div>
+            </div>
+            <div className="mt-12 text-center text-gray-400">
+              <p className="text-lg mb-4">🚀 External Proof: We built <strong>fyndfox.com</strong> in 2 weeks to prove it works.</p>
             </div>
           </div>
         </section>
@@ -136,7 +143,7 @@ export default function Home() {
       </main>
 
       <footer className="py-12 border-t border-white/5 bg-black text-center text-gray-500 text-sm">
-        <p>© 2024 Fyndfox. All rights reserved.</p>
+        <p>© 2026 DevFlow AI. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -5,11 +5,11 @@ import { Slider } from "@/components/ui/slider";
 import { Card } from "@/components/ui/card";
 
 export function ROICalculator() {
-  const [teamSize, setTeamSize] = useState([20]);
-  const [spendPerUser, setSpendPerUser] = useState([50]);
+  const [teamSize, setTeamSize] = useState([50]);
+  const [spendPerUser, setSpendPerUser] = useState([5000]);
   const [adoptionRate, setAdoptionRate] = useState([15]);
 
-  const totalMonthlySpend = teamSize[0] * spendPerUser[0];
+  const totalMonthlySpend = (teamSize[0] * spendPerUser[0]) + (teamSize[0] * 7.5 * 1000 * 4); // License + Wasted Hours (7.5h/week @ ₹1000/hr)
   const wastedSpend = totalMonthlySpend * ((100 - adoptionRate[0]) / 100);
   const usedSpend = totalMonthlySpend - wastedSpend;
 
@@ -46,15 +46,15 @@ export function ROICalculator() {
 
               <div className="space-y-4">
                 <div className="flex justify-between">
-                  <label className="text-gray-300 font-medium">Avg. SaaS Spend / User</label>
-                  <span className="text-primary font-bold">${spendPerUser}/mo</span>
+                  <label className="text-gray-300 font-medium">Avg. AI Tool Spend / User</label>
+                  <span className="text-primary font-bold">₹{spendPerUser}/mo</span>
                 </div>
                 <Slider
                   value={spendPerUser}
                   onValueChange={setSpendPerUser}
-                  min={10}
-                  max={500}
-                  step={10}
+                  min={1000}
+                  max={20000}
+                  step={500}
                   className="py-2"
                 />
               </div>
@@ -97,7 +97,7 @@ export function ROICalculator() {
                   </Pie>
                   <Tooltip 
                     contentStyle={{ backgroundColor: '#111', border: '1px solid #333' }}
-                    formatter={(value: number) => [`$${value.toLocaleString()}`, '']}
+                    formatter={(value: number) => [`₹${value.toLocaleString()}`, '']}
                   />
                 </PieChart>
               </ResponsiveContainer>
@@ -105,7 +105,7 @@ export function ROICalculator() {
             
             <div className="text-center space-y-2 mt-4">
               <div className="text-sm text-gray-400">You are wasting</div>
-              <div className="text-4xl font-bold text-red-500">${wastedSpend.toLocaleString()}</div>
+              <div className="text-4xl font-bold text-red-500">₹{wastedSpend.toLocaleString()}</div>
               <div className="text-sm text-gray-400">every single month</div>
             </div>
           </Card>

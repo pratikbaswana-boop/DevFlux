@@ -19,19 +19,20 @@ export function Hero() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
-            <span className="text-sm font-medium text-gray-300">Only 2 Audit Slots Remaining This Month</span>
+            <span className="text-sm font-medium text-gray-300">🔥 Proven with 90+ developers</span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-gray-400">
             Your AI Tools Are Burning <br className="hidden md:block" />
-            <span className="text-red-400 text-glow">₹5L/Year</span> Doing Nothing
+            <span className="text-primary text-glow">₹5L/Year</span> Doing Nothing
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            We turn <span className="text-white font-bold">10% success rates</span> into <span className="text-primary font-bold">90% ROI</span> in just 14 days. Stop guessing, start scaling.
+            We turn <span className="text-white font-bold">10% success rates</span> into <span className="text-primary font-bold">90% ROI</span> in just 14 days.<br />
+            <span className="text-white font-medium">Same tools. Same developers. 10x productivity.</span>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">

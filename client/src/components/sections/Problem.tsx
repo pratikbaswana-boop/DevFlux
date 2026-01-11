@@ -5,22 +5,22 @@ const problems = [
   {
     icon: DollarSign,
     title: "Bleeding Budget",
-    desc: "Paying for Enterprise seats that 80% of your team hasn't opened in weeks.",
-  },
-  {
-    icon: Users,
-    title: "Zero Adoption",
-    desc: "Teams stick to old workflows because the 'AI Revolution' felt too complex.",
+    desc: "Bleeding ₹45k/Month on unused AI licenses. CFO sees <20% adoption while budget is on the chopping block.",
   },
   {
     icon: Ban,
-    title: "Shadow IT Risks",
-    desc: "Employees pasting sensitive client data into public ChatGPT windows.",
+    title: "Can't Scale Magic",
+    desc: "2-3 devs are 3x faster but can't teach others. 'I just prompt until it works.' You can't scale magic.",
+  },
+  {
+    icon: Users,
+    title: "Senior Devs Abandoned AI",
+    desc: "'Wrong answers.' 'Doesn't understand our codebase.' Senior devs spend 3 hours debugging AI bugs.",
   },
   {
     icon: AlertCircle,
-    title: "Fragmented Data",
-    desc: "Insights trapped in siloed tools that don't talk to each other.",
+    title: "Dev Time Waste",
+    desc: "₹3.75L/Month lost in wasted time. 50 devs × 7.5 hrs/week × ₹1,000/hr fighting tools instead of coding.",
   },
 ];
 

@@ -7,20 +7,24 @@ import {
 
 const faqs = [
   {
+    q: "What AI tools does this work with?",
+    a: "Our workflows are tool-agnostic but battle-tested with Windsurf, Cursor, Claude Dev, and GitHub Copilot. We focus on the system, not the specific IDE.",
+  },
+  {
+    q: "Our codebase is legacy/unique - will this work?",
+    a: "Yes. Our playbooks include specific 'Context Injection' steps that teach AI how to navigate non-standard architectures and legacy patterns safely.",
+  },
+  {
+    q: "How is this different from better prompting?",
+    a: "Prompting is a sentence. Workflow is a system. We provide 6 systematic playbooks that cover the entire SDLC—from debugging to big refactors.",
+  },
+  {
+    q: "What if developers don't adopt?",
+    a: "We train 'AI Champions' in your team. Our results (80%+ adoption in 14 days) come from making developers' lives 10x easier, not from management mandates.",
+  },
+  {
     q: "How fast will we see results?",
-    a: "Most clients see their first major efficiency win within 7 days. Our 14-day sprint is designed to get you fully operational quickly.",
-  },
-  {
-    q: "Do you replace our current team?",
-    a: "Absolutely not. We empower your existing team to do 10x more. We build the 'Iron Man suit' for your employees.",
-  },
-  {
-    q: "Is our data secure?",
-    a: "Security is our top priority. We only use enterprise-grade tools with SOC2 compliance and zero-retention policies where necessary.",
-  },
-  {
-    q: "What if we don't like the results?",
-    a: "We offer a 100% satisfaction guarantee. If you don't see value in the first 30 days, we'll refund your audit fee.",
+    a: "Most clients see their first major efficiency win within 14 days. We guarantee 3x improvement in success rate within 30 days.",
   },
 ];
 
