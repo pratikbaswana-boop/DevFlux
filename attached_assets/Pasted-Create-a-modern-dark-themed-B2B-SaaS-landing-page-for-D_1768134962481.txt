@@ -1,0 +1,499 @@
+Create a modern, dark-themed B2B SaaS landing page for "DevFlow AI" - an AI workflow optimization service for engineering teams.
+
+=== DESIGN SYSTEM ===
+
+COLOR PALETTE:
+- Background: #0a0a0a (deep black) with subtle noise texture
+- Secondary background: #1a1a1a (dark charcoal)
+- Card backgrounds: rgba(26, 26, 26, 0.6) with glassmorphism blur
+- Primary accent: #8b5cf6 (electric purple/violet)
+- Secondary accent: #6366f1 (indigo)
+- Success: #10b981 (emerald green)
+- Danger/Warning: #ef4444 (red)
+- Text primary: #ffffff
+- Text secondary: #a3a3a3
+- Borders: rgba(139, 92, 246, 0.2)
+
+TYPOGRAPHY:
+- Font family: 'Inter' or 'Satoshi' for all text
+- Hero headline: 56px, font-weight 800, letter-spacing -0.02em
+- Section headlines: 36px, font-weight 700
+- Body: 18px, font-weight 400, line-height 1.6
+- Small text/labels: 14px, font-weight 500
+
+VISUAL EFFECTS:
+- Glassmorphism on cards (backdrop-blur: 20px, opacity: 0.6)
+- Subtle grid pattern overlay on dark background
+- Gradient text effects (purple to indigo)
+- Glow effects on CTAs and important metrics (box-shadow with purple)
+- Smooth scroll animations (fade-in, slide-up)
+- Hover effects: scale(1.02), brightness increase
+- Border gradients on cards
+- Animated gradient backgrounds
+
+=== PAGE STRUCTURE ===
+
+--- NAVIGATION BAR ---
+Position: Fixed top, glassmorphic background
+Content:
+- Left: Logo "DevFlow AI" with small purple chart icon
+- Right: 
+  • "Workflows" link
+  • "Pricing" link  
+  • "Book Audit" button (purple gradient, glowing)
+Style: 60px height, backdrop-blur, subtle border-bottom
+
+--- HERO SECTION ---
+Layout: Full viewport height, centered content with background animations
+
+Top badge (floating, subtle animation):
+"🔥 Proven with 90+ developers"
+Style: Small pill, purple glow, semi-transparent background
+
+Main headline (massive, gradient text purple→indigo):
+"Your AI Tools Are Burning
+₹5L/Year Doing Nothing"
+
+Subheadline (large, white, strong):
+"We turn 10% success rates into 90% in 14 days.
+Same tools. Same developers. 10x productivity."
+
+Stat row (3 metrics in glassmorphic cards, horizontal):
+Card 1: "10% → 90%" | "Success Rate"
+Card 2: "14 Days" | "To Results"  
+Card 3: "₹1.95Cr" | "Annual Waste Eliminated"
+Style: Each card glows purple on hover, has chart icon
+
+Two CTAs (large buttons, side by side):
+Primary: "📊 Book Free Audit" (purple gradient, strong glow)
+Secondary: "See How It Works ↓" (outline, white text)
+
+Background elements:
+- Animated grid pattern
+- Floating code snippets with syntax highlighting (blurred)
+- Particle effect or subtle animations
+- Abstract data visualization shapes
+
+--- PROBLEM SECTION ---
+Background: Slightly lighter than main (#121212)
+Headline: "🔥 Is This Your Engineering Team Right Now?"
+
+Layout: 2x2 grid of problem cards
+
+Card 1 (red glow):
+Icon: 💸
+Headline: "Bleeding ₹45k/Month on Unused Licenses"
+Body: "Your CFO sees <20% adoption. Productivity gains promised. Data shows disaster. Budget is on chopping block."
+
+Card 2 (red glow):
+Icon: 😤
+Headline: "Senior Devs Abandoned AI Tools"  
+Body: "\"Wrong answers.\" \"Doesn't understand our codebase.\" \"3 hours debugging AI bugs.\" Quiet resistance everywhere."
+
+Card 3 (red glow):
+Icon: 🤷
+Headline: "2-3 Devs Are Productive, Can't Scale"
+Body: "They're 3x faster but can't teach others. \"I just prompt until it works.\" You can't scale magic."
+
+Card 4 (red glow):
+Icon: 📉
+Headline: "₹3.75L/Month Lost in Wasted Time"
+Body: "50 devs × 7.5 hrs/week × ₹1,000/hr wasted fighting tools. Plus ₹5L/year licenses nobody uses."
+
+Style: Each card has subtle red border glow, dark background, 24px padding
+
+Large centered text below cards:
+"This isn't a training problem. It's a SYSTEM problem."
+
+CTA: "Yes, Audit My Team's Setup →" (purple button)
+
+--- SOLUTION SECTION ---
+Background: Dark with subtle purple gradient overlay
+Headline: "💡 The Problem Isn't Your Tools. Nobody Taught Your Team HOW."
+
+Left side (60% width):
+Large text block:
+"Giving devs Windsurf/Cursor without systematic workflows is like handing a junior dev a production bug and saying 'just fix it.'
+
+The AI doesn't know:
+- Quick patch vs robust solution?
+- Your testing strategy?  
+- Refactor vs workaround?
+
+Without structure = guessing = 10% success."
+
+Right side (40% width):
+Glassmorphic card with purple glow:
+Icon: ✨ (large)
+Headline: "Our Workflow System"
+"6 battle-tested playbooks for every coding scenario.
+
+Each workflow gives AI:
+→ Exact context needed
+→ Systematic approach
+→ Quality standards
+
+Result: Senior engineer thinking—instantly."
+
+Bold stat below: "80-90% success rate. 2 weeks."
+
+--- BEFORE/AFTER PROOF SECTION ---
+Background: Pure black
+Headline: "📊 Real Numbers. Real 90-Person Team. Not A Demo."
+
+Large comparison table (side-by-side):
+
+LEFT COLUMN (red accents):
+"BEFORE DevFlow"
+❌ 90 developers
+❌ ₹5L/year on Windsurf
+❌ <20% adoption
+❌ 10% success rate  
+❌ Negative ROI
+❌ Frustrated developers
+
+RIGHT COLUMN (green accents):
+"AFTER DevFlow"
+✅ Same 90 developers
+✅ Same Windsurf
+✅ 80% adoption
+✅ 90% success rate
+✅ 10x ROI
+✅ Daily active usage
+
+Style: Large text, icons with colored glows, dramatic visual separation
+
+Below table:
+"⏱️ Time to results: 14 days
+🛠️ Additional tools: Zero
+🔧 Codebase changes: None"
+
+--- EXTERNAL PROOF SECTION ---
+Background: Subtle gradient
+Headline: "🚀 We Built fyndfox.com in 2 Weeks to Prove It Works"
+
+Layout: Left text, right mockup/screenshot
+
+Left text:
+"External validation beyond our team:
+- Built complete shopping comparison tool
+- Time: 2 weeks (normally 2 months)  
+- Live product: fyndfox.com
+- Proves: Workflows transfer to ANY codebase
+
+This isn't theory. It's production code."
+
+Right side:
+Browser mockup showing fyndfox.com interface
+Style: Glassmorphic frame, slight 3D tilt, subtle glow
+
+--- WORKFLOWS GRID SECTION ---
+Background: Dark with grid overlay
+Headline: "🎯 6 Workflows = Every Dev Scenario Covered"
+
+Layout: 3x2 grid of workflow cards
+
+Card 1 (yellow accent):
+Icon: ⚡
+"Quick Fix"
+"Senior dev debugs null pointer: 2 hours
+With workflow: 15 minutes  
+Saved: 1.75 hours per bug"
+
+Card 2 (blue accent):
+Icon: 🔬
+"Complex Issues"  
+"Race condition investigation: 1 week
+With workflow: 1 day with full trace
+Saved: 4 senior dev days"
+
+Card 3 (purple accent):
+Icon: ✨
+"Story Implementation"
+"Feature with best practices: 3 days
+With workflow: 1 day, edge cases covered
+Saved: 2 days, better quality"
+
+Card 4 (orange accent):
+Icon: 🔄
+"Big Refactors"
+"10+ file migration: 5 days, risky
+With workflow: 2 days, zero breaks
+Saved: 3 days, less risk"
+
+Card 5 (green accent):
+Icon: ✅
+"Test Coverage"
+"Write comprehensive tests: 4 hours
+With workflow: 45 mins, better coverage
+Saved: 3.25 hours"
+
+Card 6 (red accent):
+Icon: 🆙
+"Version Upgrades"
+"Dependency conflicts: 2 days debugging
+With workflow: 3 hours, systematic fix
+Saved: 1.5 days"
+
+Style: Each card has colored border glow matching accent, hover effect scales and brightens
+
+--- LIVE METRICS SECTION ---
+Background: Pure black with animated background
+Headline: "⚡ Real-Time Impact Across Our Clients"
+
+Layout: Dashboard-style with animated charts
+
+Left side:
+Circular progress chart (like screenshot):
+Center: "₹18.2Cr" (large, glowing)
+Label: "Total Developer Time Saved"
+Arc: Purple gradient, 87% filled
+Style: Smooth animation on load
+
+Right side:
+Bar chart:
+X-axis: "Quick Fix", "Complex", "Features", "Refactors"
+Y-axis: Hours saved
+Bars: Purple gradient, values: 2.4k, 1.8k, 3.2k, 1.1k hours
+Style: Animated growth on scroll
+
+Bottom stats row (4 metrics):
+"2,847 bugs fixed" | "1,243 features shipped" | "89% avg success rate" | "12 days avg to ROI"
+Style: Glowing numbers, counter animation
+
+--- ROI CALCULATOR SECTION ---
+Background: Gradient purple to dark
+Headline: "🧮 Calculate YOUR Wasted Spend"
+
+Interactive-style layout (even if static):
+
+Input-looking boxes:
+"Team size: [50] developers"
+"AI tool spend: [₹2.5L] /month"  
+"Current success rate: [15]%"
+
+Arrow down
+
+Output box (large, glowing):
+"YOU'RE WASTING
+₹22.4Cr/year
+(₹1.87Cr/month)"
+
+Breakdown below:
+"License waste: ₹2.1L/month (85% unused)
+Productivity loss: ₹1.66Cr/month (7.5hrs/week lost)
+
+With DevFlow @ ₹2L/year:
+Net annual saving: ₹20.2Cr
+Payback period: 3.2 days
+First month ROI: 93x"
+
+CTA: "Show Me My Numbers →"
+
+--- PRICING SECTION ---
+Background: Dark with subtle pattern
+Headline: "💰 Investment & ROI (Every Plan Pays For Itself)"
+
+Layout: 3 cards horizontal
+
+CARD 1 (white border):
+"🚀 Quick Start"
+"₹50,000 one-time"
+"Best for: 10-20 devs"
+Features (checkmarks):
+✓ 6 core workflows
+✓ 14-day implementation
+✓ Train 3 champions  
+✓ 30-day support
+ROI: Break even in 4 days
+Button: "Get Started →"
+
+CARD 2 (purple glow, larger, featured):
+Badge on top: "🔥 MOST POPULAR"
+"📈 Growth"
+"₹2,00,000/year"
+"Best for: 20-50 devs"
+Features:
+✓ Everything in Quick Start
+✓ Quarterly workflow updates
+✓ Monthly training sessions
+✓ Dedicated Slack channel
+✓ Custom workflow creation
+ROI: Break even in 12 days
+Button: "Start Growing →" (glowing purple)
+
+CARD 3 (indigo border):
+"⚡ Enterprise"
+"Custom pricing"
+"Best for: 50+ devs"
+Features:
+✓ Everything in Growth
+✓ Weekly office hours
+✓ Custom integrations  
+✓ Real-time analytics
+✓ SLA guarantees
+✓ Success manager
+ROI: Break even in 8 days
+Button: "Let's Talk →"
+
+Note above cards:
+"All plans: 6 workflows • 14-day setup • 30-day support • 100% money-back guarantee"
+
+--- GUARANTEE SECTION ---
+Background: Slightly lighter dark
+Headline: "🛡️ Triple Guarantee (Never Issued A Refund)"
+
+3 cards horizontal:
+
+Card 1 (green glow):
+"✅ Success Rate Guarantee"
+"3x improvement in 30 days or 100% refund. No questions.
+
+We track from Day 1. Clear before/after data."
+
+Card 2 (blue glow):
+"✅ Timeline Guarantee"
+"No improvement in 14 days? We work free until you do.
+
+Your commitment ends. Ours doesn't."
+
+Card 3 (purple glow):
+"✅ Zero Risk Guarantee"
+"Works within YOUR tools, YOUR code, YOUR workflow.
+
+Nothing breaks. Nothing changes unless working."
+
+Large text below:
+"Why we've never refunded: 2+ years, 90+ developers, works every time."
+
+--- FAQ SECTION ---
+Background: Dark
+Headline: "❓ Questions You're Probably Asking"
+
+Accordion-style (8 questions):
+
+1. "We tried AI workflows before. What's different?"
+2. "Our codebase is legacy/unique. Will this work?"
+3. "What if developers don't adopt this?"
+4. "How is this different from better prompting?"
+5. "What tools does this work with?"
+6. "Can we start with a pilot team?"
+7. "What's included in support?"
+8. "How do you measure success rate?"
+
+Style: Each accordion has purple left border, expands with smooth animation, glassmorphic background when open
+
+--- URGENCY SECTION ---
+Background: Red to purple gradient
+Headline: "⏰ Only 2 Implementation Slots Left in January 2026"
+
+Card (large, centered):
+"🔥 We limit to 5 teams/month for quality.
+
+Each implementation needs:
+- 40 hours deep focus
+- Custom tech stack adaptation  
+- Daily 2-week support
+- 30-day optimization
+
+Q1 2026 timeline:
+✅ January: 2 slots (you're here)
+⚠️ February: Waitlist open
+❌ March: Fully booked
+
+Want results before Q1 ends? Book this week."
+
+CTA: "Claim January Slot →" (large, pulsing glow)
+
+--- FINAL CTA SECTION ---
+Background: Pure black with animated particles
+Headline (huge, gradient): "Stop Losing Money. Start Here."
+
+Large text:
+"Your team wasted 8 hours today fighting AI tools.
+
+That's ₹24,000 gone.
+This week: ₹1.2L
+This month: ₹5L+
+This year: ₹60L+
+
+Or:
+
+30 minutes → book audit
+14 days → fix forever
+10x ROI → month 1"
+
+Massive CTA button:
+"📊 BOOK FREE AUDIT NOW"
+Style: Giant purple gradient button, strong glow, scale on hover
+
+Small text below:
+"30-min call. We show you exact waste. If not a fit, we'll tell you. Zero sales pitch."
+
+--- FOOTER ---
+Background: #0a0a0a
+Layout: 3 columns
+
+Column 1:
+Logo + "DevFlow AI"
+"Making AI coding tools actually work."
+"Built by developers who lived this problem."
+
+Column 2:
+Links:
+- How It Works
+- Pricing
+- FAQ
+
+Column 3:
+Contact:
+📧 contact@devflow.in
+🌐 Serving teams globally
+"2026 DevFlow AI"
+
+Style: Minimal, gray text, purple link hovers
+
+=== INTERACTION & ANIMATION NOTES ===
+
+On scroll animations:
+- Fade in + slide up for sections
+- Number counter animations for stats
+- Chart growth animations
+- Stagger animation for card grids
+
+Hover effects:
+- Buttons: scale(1.05) + brightness increase + glow intensify
+- Cards: scale(1.02) + border glow
+- Links: color shift to purple
+
+Loading:
+- Smooth fade in of hero
+- Progressive loading of sections
+- Skeleton screens for charts
+
+Mobile responsive:
+- Stack sections vertically
+- Single column for grids
+- Larger touch targets
+- Simplified animations
+
+=== OVERALL VIBE ===
+
+The page should feel like:
+- A developer tool dashboard (like VS Code, Linear, Vercel)
+- Data-driven and analytical
+- Modern, fast, technical
+- Trustworthy and professional
+- Exciting and energetic (not corporate boring)
+- Dark, sleek, powerful
+
+Design inspiration:
+- Vercel's landing pages (dark, fast, modern)
+- Linear's aesthetic (clean, purposeful)
+- Stripe's data visualization
+- GitHub's new design language
+- Tailwind UI components
+
+Build this as a single-page scroll website with smooth section transitions, strong visual hierarchy, and clear CTAs throughout. Every section should reinforce: "AI tools waste money → Our workflows fix it → Proven results → Easy to start."
+
+Generate complete, production-ready code with all sections, animations, and responsive design.
