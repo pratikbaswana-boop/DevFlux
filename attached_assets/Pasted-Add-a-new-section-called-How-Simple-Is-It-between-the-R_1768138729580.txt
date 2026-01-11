@@ -1,0 +1,117 @@
+Add a new section called "How Simple Is It?" between the "Real Numbers. 90-Person Team" section and the "6 Battle-Tested Playbooks" section. This section demonstrates the dead-simple developer experience.
+
+NEW SECTION: "How Simple Is It?"
+Background: Slightly different from other sections (subtle gradient or different shade) to make it stand out as the "aha moment"
+Section Headline:
+"Your Developers Type This. We Handle Everything Else."
+Subheadline:
+"No training required. No prompt engineering. Just describe the problem."
+
+LAYOUT: Two-column split (60% left, 40% right on desktop, stacked on mobile)
+
+LEFT SIDE: "The Developer Experience"
+Create a mock terminal/chat interface that looks like Windsurf or VS Code command palette:
+Style it like a code editor with:
+
+Dark background (#0d1117)
+Rounded corners
+Top bar with three dots (red, yellow, green) like macOS window
+Monospace font
+
+Content inside the terminal:
+> /complex-issue
+
+Describe your issue:
+"Payment sometimes fails after user clicks pay. 
+No error in logs. Happens randomly, ~1 in 20 
+transactions. Started after last week's deploy."
+Below the terminal, add large bold text:
+"That's it. That's the entire interaction."
+Below that, smaller text:
+"No back-and-forth. No 'can you give me more context?' No prompt engineering. Just describe what's broken like you'd tell a senior dev."
+
+RIGHT SIDE: "What Happens Automatically"
+Create a vertical checklist with animated appearance (checkmarks appear one by one on scroll):
+✅ Gathers complete context automatically
+
+✅ Traces chronological execution flow
+   User clicks → Controller → Service → DB
+
+✅ Identifies race condition in OrderService.java:247
+
+✅ Validates against actual code (no hallucination)
+
+✅ Proposes minimal fix with evidence
+
+✅ Generates tests for the fix
+Below the checklist:
+"⏱️ 15 minutes from problem to fix"
+
+BOTTOM: Side-by-side comparison cards
+Two cards horizontally:
+LEFT CARD (dimmed, slight red tint):
+Title: "Without DevFlow"
+Developer: "Fix this payment bug"
+AI: "Maybe check the database connection?"
+Developer: "That's not it..."
+AI: "Could be a caching issue?"
+Developer: "Wrong again"
+AI: "What about the API timeout?"
+
+⏱️ 3 hours of guessing
+❌ Still no root cause
+RIGHT CARD (bright, purple glow/border):
+Title: "With DevFlow"
+Developer: /complex-issue + description
+AI: [Systematic 5-step analysis]
+AI: "Root cause: Race condition at line 247"
+AI: "Here's the fix + tests"
+
+⏱️ 15 minutes
+✅ Done. Verified. Tested.
+
+BOTTOM: Workflow command showcase
+Heading: "6 Commands. Every Scenario."
+Create 6 pill/chip buttons in a horizontal row (scrollable on mobile):
+CommandLabel below/quick-fixKnown bugs/complex-issueMystery bugs/storyNew features/refactorBig changes/testsFull coverage/upgradeDependencies
+Style:
+
+Background: rgba(139, 92, 246, 0.15)
+Border: 1px solid purple
+Text: Purple/violet
+Hover: Background fills solid, text turns white
+Spacing between pills: 12px
+
+
+SECTION CTA:
+Button: "See It In Action → Book Demo"
+Style: Same as other CTAs on page (purple gradient)
+
+VISUAL SPECIFICATIONS:
+Terminal mock:
+
+Background: #0d1117
+Border: 1px solid #30363d
+Border-radius: 12px
+Font: monospace (JetBrains Mono, Fira Code, or system mono)
+The /complex-issue text should be highlighted in purple (#a78bfa)
+Add a blinking cursor animation at the end
+
+Checklist:
+
+Checkmarks: Green (#10b981)
+Text: White
+Sub-text (the trace path): Gray, smaller font
+Animate on scroll: Each item fades in with 0.2s delay
+
+Comparison cards:
+
+Both cards same size
+Left card: opacity 0.7, subtle red border or tint
+Right card: full opacity, purple glow (box-shadow: 0 0 20px rgba(139, 92, 246, 0.3))
+
+Command pills:
+
+Horizontally scrollable on mobile
+Equal spacing
+Consistent size

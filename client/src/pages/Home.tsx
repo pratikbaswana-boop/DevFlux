@@ -1,5 +1,6 @@
 import { Hero } from "@/components/sections/Hero";
 import { Problem } from "@/components/sections/Problem";
+import { HowSimpleIsIt } from "@/components/sections/HowSimpleIsIt";
 import { Workflows } from "@/components/sections/Workflows";
 import { ROICalculator } from "@/components/sections/ROICalculator";
 import { Pricing } from "@/components/sections/Pricing";
@@ -89,6 +90,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <HowSimpleIsIt />
 
         <div id="solutions">
           <Workflows />
