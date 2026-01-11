@@ -24,7 +24,7 @@ export function HowSimpleIsIt() {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-black via-zinc-950 to-black relative overflow-hidden">
+    <section id="how-it-works" className="py-24 bg-gradient-to-b from-black via-zinc-950 to-black relative overflow-hidden">
       <div className="container px-4 mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">

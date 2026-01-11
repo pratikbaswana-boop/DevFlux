@@ -41,9 +41,11 @@ export function Hero() {
                 Book Free Audit <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </AuditModal>
-            <Button size="lg" variant="outline" className="h-14 px-8 text-lg bg-white/5 border-white/10 hover:bg-white/10 text-white rounded-xl backdrop-blur-sm">
-              See How It Works
-            </Button>
+            <a href="#how-it-works">
+              <Button size="lg" variant="outline" className="h-14 px-8 text-lg bg-white/5 border-white/10 hover:bg-white/10 text-white rounded-xl backdrop-blur-sm">
+                See How It Works
+              </Button>
+            </a>
           </div>
         </motion.div>
 
