@@ -1,6 +1,7 @@
 import type { Express, Request, Response } from "express";
 import Razorpay from "razorpay";
 import crypto from "crypto";
+import { generateDownloadToken } from "./download";
 
 const razorpayInstance = new Razorpay({
   key_id: process.env.key_id || process.env.RAZORPAY_KEY_ID || "",
@@ -77,11 +78,16 @@ export function registerPaymentRoutes(app: Express) {
       const isAuthentic = expectedSignature === razorpay_signature;
 
       if (isAuthentic) {
+        // Generate secure download token
+        const { token: download_token, expires: download_expires } = generateDownloadToken(razorpay_payment_id);
+
         res.status(200).json({
           success: true,
           message: "Payment verified successfully",
           payment_id: razorpay_payment_id,
           order_id: razorpay_order_id,
+          download_token,
+          download_expires,
         });
       } else {
         console.error("Signature verification failed:", {

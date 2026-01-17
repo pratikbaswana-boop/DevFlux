@@ -18,6 +18,8 @@ interface VerifyPaymentResponse {
   message: string;
   payment_id: string;
   order_id: string;
+  download_token?: string;
+  download_expires?: number;
   error?: string;
 }
 

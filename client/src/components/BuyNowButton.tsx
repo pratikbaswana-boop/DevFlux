@@ -32,8 +32,19 @@ export function BuyNowButton({
   const [paymentStatus, setPaymentStatus] = useState<"success" | "failure" | "cancelled">("success");
   const [paymentId, setPaymentId] = useState<string | undefined>();
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
+  const [downloadToken, setDownloadToken] = useState<string | undefined>();
   const createOrder = useCreateOrder();
   const verifyPayment = useVerifyPayment();
+
+  const triggerDownload = (token: string) => {
+    const downloadUrl = `/api/download/${token}`;
+    const link = document.createElement("a");
+    link.href = downloadUrl;
+    link.download = "devflux-package.zip";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const handlePayment = async () => {
     setLoading(true);
@@ -69,8 +80,14 @@ export function BuyNowButton({
 
             if (verifyData.success) {
               setPaymentId(response.razorpay_payment_id);
+              setDownloadToken(verifyData.download_token);
               setPaymentStatus("success");
               setModalOpen(true);
+              
+              // Trigger automatic download
+              if (verifyData.download_token) {
+                triggerDownload(verifyData.download_token);
+              }
             } else {
               setErrorMessage("Payment verification failed. Please contact support.");
               setPaymentStatus("failure");
@@ -146,6 +163,7 @@ export function BuyNowButton({
         status={paymentStatus}
         paymentId={paymentId}
         errorMessage={errorMessage}
+        downloadToken={downloadToken}
       />
     </>
   );

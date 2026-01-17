@@ -262,3 +262,145 @@ interface PaymentStatusModalProps {
 2. Add Framer Motion animations for icons and modal
 3. Update `BuyNowButton.tsx` to show modal on payment result
 4. Test all three states (success, failure, cancel)
+
+---
+
+## Secure File Download Feature
+
+### Story Goal
+After successful payment, automatically download a ZIP file stored on server. The file must only be downloadable with valid payment proof (no one can download without payment).
+
+### Security Architecture
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                 SECURE DOWNLOAD FLOW                            │
+├─────────────────────────────────────────────────────────────────┤
+│  1. Payment verified successfully                               │
+│           ↓                                                      │
+│  2. Backend generates signed download token                     │
+│     Token = HMAC(payment_id + timestamp + secret)               │
+│     Token expires in 5 minutes                                  │
+│           ↓                                                      │
+│  3. Backend returns download_token in verify response           │
+│           ↓                                                      │
+│  4. Frontend calls /api/download/:token                         │
+│           ↓                                                      │
+│  5. Backend validates token signature + expiry                  │
+│           ↓                                                      │
+│  6. If valid: Stream ZIP file to user                           │
+│     If invalid: Return 403 Forbidden                            │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### New Backend Files
+| File | Path | Description |
+|------|------|-------------|
+| `download.ts` | `server/download.ts` | Secure download route with token validation |
+
+### New Directory
+| Directory | Path | Description |
+|-----------|------|-------------|
+| `protected` | `server/protected/` | Store ZIP files (not publicly accessible) |
+
+### Modified Files
+| File | Path | Changes |
+|------|------|---------|
+| `payment.ts` | `server/payment.ts` | Generate download token on successful verification |
+| `routes.ts` | `server/routes.ts` | Register download routes |
+| `BuyNowButton.tsx` | `client/src/components/BuyNowButton.tsx` | Trigger download after payment success |
+| `PaymentStatusModal.tsx` | `client/src/components/PaymentStatusModal.tsx` | Show download progress/status |
+
+### API Contract
+
+#### Modified: POST /api/payment/verify
+**Response (200) - Updated:**
+```typescript
+{
+  success: true;
+  message: string;
+  payment_id: string;
+  order_id: string;
+  download_token: string;  // NEW: Signed token for secure download
+  download_expires: number; // NEW: Token expiry timestamp
+}
+```
+
+#### New: GET /api/download/:token
+**Request:**
+- URL param: `token` - Signed download token
+
+**Response (200):**
+- Content-Type: application/zip
+- Content-Disposition: attachment; filename="devflux-package.zip"
+- Body: ZIP file stream
+
+**Response (403):**
+```typescript
+{
+  success: false;
+  error: "Invalid or expired download token"
+}
+```
+
+**Response (404):**
+```typescript
+{
+  success: false;
+  error: "Download file not found"
+}
+```
+
+### Environment Variables
+```
+DOWNLOAD_SECRET=your-secret-key-for-signing-tokens
+```
+
+### Token Structure
+```typescript
+// Token payload (base64 encoded)
+{
+  payment_id: string;
+  timestamp: number;
+  expires: number;  // timestamp + 5 minutes
+}
+
+// Token format: base64(payload).signature
+// Signature: HMAC-SHA256(payload, DOWNLOAD_SECRET)
+```
+
+### Definition of Done (Secure Download)
+- [ ] `server/protected/` directory created with sample ZIP
+- [ ] Download token generation in payment verify endpoint
+- [ ] Token validation with HMAC signature verification
+- [ ] Token expiry check (5 minute window)
+- [ ] Secure file streaming via Express
+- [ ] Frontend triggers download on payment success
+- [ ] Download progress shown in success modal
+- [ ] Direct URL access returns 403 (no token bypass)
+
+### Decisions Log (Secure Download)
+| Decision | Rationale |
+|----------|-----------|
+| HMAC-signed tokens | Prevents token forgery, no database needed |
+| 5-minute expiry | Short window reduces replay attack risk |
+| Server-side file storage | Files not in public directory, can't be guessed |
+| Single-use consideration | Optional: invalidate token after use |
+
+### Do Not Touch (Secure Download)
+- Existing payment create-order endpoint
+- PaymentStatusModal animation logic
+- Other API routes
+
+### Rollback Points
+1. **After token generation**: Can revert payment.ts changes
+2. **After download endpoint**: Can remove download.ts
+3. **After frontend integration**: Can revert BuyNowButton changes
+
+### Implementation Phase
+**Phase 6: Secure File Download**
+1. Create `server/protected/` directory
+2. Create `server/download.ts` with token validation and file serving
+3. Update `server/payment.ts` to generate download token on verify
+4. Update `server/routes.ts` to register download routes
+5. Update `BuyNowButton.tsx` to trigger download on success
+6. Update `PaymentStatusModal.tsx` to show download status

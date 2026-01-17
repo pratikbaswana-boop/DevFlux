@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, AlertTriangle } from "lucide-react";
+import { X, AlertTriangle, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,6 +16,7 @@ interface PaymentStatusModalProps {
   paymentId?: string;
   orderId?: string;
   errorMessage?: string;
+  downloadToken?: string;
 }
 
 const modalVariants = {
@@ -142,7 +143,19 @@ export function PaymentStatusModal({
   paymentId,
   orderId,
   errorMessage,
+  downloadToken,
 }: PaymentStatusModalProps) {
+  const handleDownload = () => {
+    if (downloadToken) {
+      const downloadUrl = `/api/download/${downloadToken}`;
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.download = "devflux-package.zip";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
   const statusConfig = {
     success: {
       icon: <SuccessIcon />,
@@ -210,6 +223,21 @@ export function PaymentStatusModal({
                   >
                     <p className="text-xs text-gray-500 mb-1">Payment ID</p>
                     <p className="text-sm font-mono text-gray-300 break-all">{paymentId}</p>
+                  </motion.div>
+                )}
+
+                {status === "success" && downloadToken && (
+                  <motion.div variants={contentItem} className="mt-4 w-full">
+                    <Button
+                      onClick={handleDownload}
+                      className="w-full py-4 text-base font-semibold bg-primary hover:bg-primary/90 flex items-center justify-center gap-2"
+                    >
+                      <Download className="w-5 h-5" />
+                      Download Your Package
+                    </Button>
+                    <p className="text-xs text-gray-500 mt-2 text-center">
+                      Your download should start automatically. Click above if it doesn't.
+                    </p>
                   </motion.div>
                 )}
 

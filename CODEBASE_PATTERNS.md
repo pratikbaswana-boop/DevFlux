@@ -51,6 +51,13 @@
 - `@shared/schema` - Zod schema definitions
 
 ## Key Dependencies
-- No Razorpay SDK in package.json - needs to be added
+- Razorpay SDK installed
 - Express backend ready for new routes
 - Zod for validation
+
+## Secure File Download Pattern
+- **File Storage**: Store protected files in `server/protected/` directory (not in public)
+- **Token-based Access**: Generate short-lived download tokens after payment verification
+- **Signature Verification**: Use HMAC to sign download tokens with payment_id + timestamp
+- **Express File Serving**: Use `res.download()` for file downloads with proper headers
+- **Security**: Validate token signature and expiry before serving file
