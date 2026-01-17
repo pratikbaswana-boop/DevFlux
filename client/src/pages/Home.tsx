@@ -16,10 +16,7 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-lg border-b border-white/5">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="text-xl font-display font-bold flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white">
-              D
-            </div>
-            DevFlux
+            <img src="/logo.png" alt="DevFlux" className="h-8 w-auto" />
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
             <a href="#problems" className="hover:text-white transition-colors">Problems</a>
