@@ -170,3 +170,95 @@ npm install razorpay crypto
 1. Test payment flow with Razorpay test credentials
 2. Verify all button replacements work correctly
 3. Remove unused AuditModal imports (optional)
+
+---
+
+## Payment Status Popup Feature
+
+### Story Goal
+Show payment status (success/failure/cancel) as a themed popup with cool animations matching the dark theme.
+
+### New Component
+| Component | Path | Description |
+|-----------|------|-------------|
+| `PaymentStatusModal` | `client/src/components/PaymentStatusModal.tsx` | Animated modal showing payment result |
+
+### Modified Component
+| Component | Path | Changes |
+|-----------|------|---------|
+| `BuyNowButton.tsx` | `client/src/components/BuyNowButton.tsx` | Integrate PaymentStatusModal for status display |
+
+### Component Design
+
+#### PaymentStatusModal Props
+```typescript
+interface PaymentStatusModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  status: "success" | "failure" | "cancelled";
+  paymentId?: string;
+  orderId?: string;
+  errorMessage?: string;
+}
+```
+
+#### Visual Design
+- **Success State**:
+  - Green checkmark icon with pulse animation
+  - "Payment Successful!" title
+  - Payment ID display
+  - Confetti/sparkle animation
+  - "Continue" button
+
+- **Failure State**:
+  - Red X icon with shake animation
+  - "Payment Failed" title
+  - Error message display
+  - "Try Again" button
+
+- **Cancelled State**:
+  - Yellow warning icon
+  - "Payment Cancelled" title
+  - "Try Again" button
+
+#### Animations (Framer Motion)
+
+**Modal Container**
+- Enter: scale(0.95→1) + opacity(0→1), duration 300ms, ease [0.32, 0.72, 0, 1]
+- Exit: scale(1→0.95) + opacity(1→0), duration 200ms
+
+**Success State**
+- Checkmark: SVG path draw animation (500ms)
+- Ring burst: scale(0→1.5) + opacity(1→0), 400ms
+- 8 particles: random trajectory outward, staggered 50ms each
+
+**Failure State**
+- X icon: fade in + shake (translateX: [-8, 8, -6, 6, 0]), 400ms
+- Optional: subtle screen shake on modal
+
+**Content Stagger**
+- Icon: delay 0ms
+- Title: delay 150ms
+- Details: delay 300ms
+- Button: delay 450ms, all with opacity + translateY(10→0)
+
+### Definition of Done (Payment Status Popup)
+- [ ] PaymentStatusModal component created
+- [ ] Success state with green checkmark and animation
+- [ ] Failure state with red X and shake animation
+- [ ] Cancelled state with warning icon
+- [ ] BuyNowButton integrates modal for all payment outcomes
+- [ ] Modal matches dark theme styling
+- [ ] Smooth open/close animations
+
+### Do Not Touch (Payment Status Popup)
+- Existing Dialog UI component structure
+- Payment API endpoints (already working)
+- Other modal components (AuditModal)
+
+### Implementation Phase
+**Phase 5: Payment Status Popup**
+1. Create `PaymentStatusModal.tsx` with three states
+2. Add Framer Motion animations for icons and modal
+3. Update `BuyNowButton.tsx` to show modal on payment result
+4. Test all three states (success, failure, cancel)

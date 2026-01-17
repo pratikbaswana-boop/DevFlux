@@ -3,6 +3,12 @@
 ## Reference Feature Analyzed
 **AuditModal** - Modal-based form component that triggers on button click, collects user data, and submits to backend API.
 
+### Payment Status Popup Reference
+- **Dialog Component**: Uses `@radix-ui/react-dialog` via `@/components/ui/dialog`
+- **Styling**: Dark theme with `bg-black/90 border-white/10 backdrop-blur-xl text-white`
+- **Animations**: Built-in Radix animations (`animate-in`, `fade-in`, `zoom-in-95`)
+- **Framer Motion**: Available for custom animations (used in Hero, sections)
+
 ## Architecture Pattern
 
 ### Frontend (React + TypeScript)

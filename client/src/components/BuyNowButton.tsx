@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useCreateOrder, useVerifyPayment } from "@/hooks/use-payment";
 import { Loader2 } from "lucide-react";
+import { PaymentStatusModal } from "@/components/PaymentStatusModal";
 
 declare global {
   interface Window {
@@ -27,6 +28,10 @@ export function BuyNowButton({
   productName = "DevFlux Subscription",
 }: BuyNowButtonProps) {
   const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState<"success" | "failure" | "cancelled">("success");
+  const [paymentId, setPaymentId] = useState<string | undefined>();
+  const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const createOrder = useCreateOrder();
   const verifyPayment = useVerifyPayment();
 
@@ -63,15 +68,21 @@ export function BuyNowButton({
             const verifyData = await verifyPayment.mutateAsync(response);
 
             if (verifyData.success) {
-              alert("Payment successful! Thank you for your purchase.");
-              window.location.href = "/";
+              setPaymentId(response.razorpay_payment_id);
+              setPaymentStatus("success");
+              setModalOpen(true);
             } else {
-              alert("Payment verification failed. Please contact support.");
+              setErrorMessage("Payment verification failed. Please contact support.");
+              setPaymentStatus("failure");
+              setModalOpen(true);
             }
           } catch (error) {
             console.error("Verification error:", error);
-            alert("Payment verification failed. Please contact support.");
+            setErrorMessage("Payment verification failed. Please contact support.");
+            setPaymentStatus("failure");
+            setModalOpen(true);
           }
+          setLoading(false);
         },
         prefill: {
           name: "",
@@ -83,6 +94,8 @@ export function BuyNowButton({
         },
         modal: {
           ondismiss: function () {
+            setPaymentStatus("cancelled");
+            setModalOpen(true);
             setLoading(false);
           },
         },
@@ -92,34 +105,48 @@ export function BuyNowButton({
 
       rzp.on("payment.failed", function (response: any) {
         console.error("Payment failed:", response.error);
-        alert(`Payment failed: ${response.error.description}`);
+        setErrorMessage(response.error.description || "Payment failed. Please try again.");
+        setPaymentStatus("failure");
+        setModalOpen(true);
         setLoading(false);
       });
 
       rzp.open();
     } catch (error) {
       console.error("Payment error:", error);
-      alert("Could not initiate payment. Please try again.");
+      setErrorMessage("Could not initiate payment. Please try again.");
+      setPaymentStatus("failure");
+      setModalOpen(true);
       setLoading(false);
     }
   };
 
   return (
-    <Button
-      onClick={handlePayment}
-      disabled={loading}
-      className={className}
-      size={size}
-      variant={variant}
-    >
-      {loading ? (
-        <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Processing...
-        </>
-      ) : (
-        children
-      )}
-    </Button>
+    <>
+      <Button
+        onClick={handlePayment}
+        disabled={loading}
+        className={className}
+        size={size}
+        variant={variant}
+      >
+        {loading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Processing...
+          </>
+        ) : (
+          children
+        )}
+      </Button>
+
+      <PaymentStatusModal
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+        status={paymentStatus}
+        paymentId={paymentId}
+        errorMessage={errorMessage}
+      />
+    </>
   );
 }
