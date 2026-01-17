@@ -1,6 +1,5 @@
-import { Check, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { AuditModal } from "@/components/AuditModal";
+import { Check, Users, ShoppingCart } from "lucide-react";
+import { BuyNowButton } from "@/components/BuyNowButton";
 
 const features = [
   "Full workflow automation",
@@ -50,11 +49,9 @@ export function Pricing() {
               ))}
             </ul>
 
-            <AuditModal>
-              <Button className="w-full bg-primary hover:bg-primary/90 text-lg py-6">
-                Get Started
-              </Button>
-            </AuditModal>
+            <BuyNowButton className="w-full bg-primary hover:bg-primary/90 text-lg py-6">
+              Buy Now <ShoppingCart className="ml-2 h-5 w-5" />
+            </BuyNowButton>
           </div>
         </div>
       </div>

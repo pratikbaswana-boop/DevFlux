@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import { ArrowRight, BarChart3, Bot, Zap } from "lucide-react";
+import { ArrowRight, BarChart3, Bot, Zap, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { AuditModal } from "@/components/AuditModal";
+import { BuyNowButton } from "@/components/BuyNowButton";
 
 export function Hero() {
   return (
@@ -36,11 +36,9 @@ export function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-            <AuditModal>
-              <Button size="lg" className="h-14 px-8 text-lg bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 rounded-xl border-t border-white/20">
-                Book Free Audit <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </AuditModal>
+            <BuyNowButton size="lg" className="h-14 px-8 text-lg bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 rounded-xl border-t border-white/20">
+              Buy Now <ShoppingCart className="ml-2 h-5 w-5" />
+            </BuyNowButton>
             <a href="#how-it-works">
               <Button size="lg" variant="outline" className="h-14 px-8 text-lg bg-white/5 border-white/10 hover:bg-white/10 text-white rounded-xl backdrop-blur-sm">
                 See How It Works

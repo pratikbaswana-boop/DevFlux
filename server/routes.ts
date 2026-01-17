@@ -3,11 +3,15 @@ import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
+import { registerPaymentRoutes } from "./payment";
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  
+  // Register payment routes
+  registerPaymentRoutes(app);
   
   app.post(api.audit.create.path, async (req, res) => {
     try {

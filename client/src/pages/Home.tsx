@@ -5,9 +5,8 @@ import { Workflows } from "@/components/sections/Workflows";
 import { ROICalculator } from "@/components/sections/ROICalculator";
 import { Pricing } from "@/components/sections/Pricing";
 import { FAQ } from "@/components/sections/FAQ";
-import { AuditModal } from "@/components/AuditModal";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, ShieldCheck, Clock, Award } from "lucide-react";
+import { BuyNowButton } from "@/components/BuyNowButton";
+import { ShieldCheck, Clock, Award, ShoppingCart } from "lucide-react";
 
 export default function Home() {
   return (
@@ -23,11 +22,9 @@ export default function Home() {
             <a href="#solutions" className="hover:text-white transition-colors">Solutions</a>
             <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
           </div>
-          <AuditModal>
-            <Button size="sm" className="bg-white/10 hover:bg-white/20 text-white border border-white/10">
-              Book Audit
-            </Button>
-          </AuditModal>
+          <BuyNowButton size="sm" className="bg-white/10 hover:bg-white/20 text-white border border-white/10">
+              Buy Now
+            </BuyNowButton>
         </div>
       </nav>
 
@@ -130,11 +127,9 @@ export default function Home() {
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-8">
               Stop Losing Money.<br />Start Here.
             </h2>
-            <AuditModal>
-              <Button size="lg" className="h-16 px-10 text-xl bg-white text-black hover:bg-gray-200 rounded-full font-bold shadow-2xl shadow-white/10">
-                Book Your Audit Now <ArrowRight className="ml-2 h-6 w-6" />
-              </Button>
-            </AuditModal>
+            <BuyNowButton size="lg" className="h-16 px-10 text-xl bg-white text-black hover:bg-gray-200 rounded-full font-bold shadow-2xl shadow-white/10">
+              Buy Now <ShoppingCart className="ml-2 h-6 w-6" />
+            </BuyNowButton>
             <p className="mt-6 text-sm text-gray-400">
               Only 2 implementation slots left for this month.
             </p>

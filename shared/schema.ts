@@ -20,3 +20,20 @@ export const insertAuditRequestSchema = createInsertSchema(auditRequests).omit({
 
 export type AuditRequest = typeof auditRequests.$inferSelect;
 export type InsertAuditRequest = z.infer<typeof insertAuditRequestSchema>;
+
+// Payment schemas
+export const createOrderSchema = z.object({
+  amount: z.number().min(100, "Amount must be at least 100 paise (₹1)"),
+  currency: z.string().default("INR"),
+  receipt: z.string().optional(),
+  notes: z.record(z.string()).optional(),
+});
+
+export const verifyPaymentSchema = z.object({
+  razorpay_payment_id: z.string(),
+  razorpay_order_id: z.string(),
+  razorpay_signature: z.string(),
+});
+
+export type CreateOrderInput = z.infer<typeof createOrderSchema>;
+export type VerifyPaymentInput = z.infer<typeof verifyPaymentSchema>;
