@@ -3,8 +3,8 @@ import Razorpay from "razorpay";
 import crypto from "crypto";
 
 const razorpayInstance = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID || "",
-  key_secret: process.env.RAZORPAY_KEY_SECRET || "",
+  key_id: process.env.key_id || process.env.RAZORPAY_KEY_ID || "",
+  key_secret: process.env.key_secret || process.env.RAZORPAY_KEY_SECRET || "",
 });
 
 export function registerPaymentRoutes(app: Express) {
@@ -39,7 +39,7 @@ export function registerPaymentRoutes(app: Express) {
           receipt: order.receipt,
           status: order.status,
         },
-        key_id: process.env.RAZORPAY_KEY_ID,
+        key_id: process.env.key_id || process.env.RAZORPAY_KEY_ID,
       });
     } catch (error: any) {
       console.error("Order creation failed:", error);
@@ -69,7 +69,7 @@ export function registerPaymentRoutes(app: Express) {
       const body = razorpay_order_id + "|" + razorpay_payment_id;
 
       const expectedSignature = crypto
-        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET || "")
+        .createHmac("sha256", process.env.key_secret || process.env.RAZORPAY_KEY_SECRET || "")
         .update(body)
         .digest("hex");
 
