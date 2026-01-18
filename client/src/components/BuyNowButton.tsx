@@ -24,7 +24,7 @@ export function BuyNowButton({
   className,
   size = "default",
   variant = "default",
-  amount = 100,
+  amount = 89900,
   productName = "DevFlux Subscription",
 }: BuyNowButtonProps) {
   const [loading, setLoading] = useState(false);
