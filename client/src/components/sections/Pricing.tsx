@@ -2,14 +2,12 @@ import { Check, Users, ShoppingCart } from "lucide-react";
 import { BuyNowButton } from "@/components/BuyNowButton";
 
 const features = [
-  "Full workflow automation",
-  "14-day implementation",
-  "Dedicated training sessions",
-  "Slack/Teams support channel",
-  "Custom workflow creation",
-  "Quarterly updates included",
-  "Real-time analytics dashboard",
-  "Priority support"
+  "6 battle-tested workflow files",
+  "Works with Cursor, Windsurf, Claude & more",
+  "Instant download after purchase",
+  "Lifetime access to all workflows",
+  "Future updates included",
+  "Setup guide & documentation"
 ];
 
 export function Pricing() {
@@ -28,13 +26,13 @@ export function Pricing() {
         <div className="max-w-lg mx-auto">
           <div className="relative flex flex-col p-10 rounded-2xl border bg-primary/5 border-primary shadow-2xl shadow-primary/10">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full">
-              PER DEVELOPER
+              LIFETIME ACCESS
             </div>
             
             <div className="text-center mb-8">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <Users className="w-6 h-6 text-primary" />
-                <span className="text-gray-400">Per Developer / Month</span>
+                <span className="text-gray-400">One-Time Payment / Lifetime Access</span>
               </div>
               <div className="text-6xl font-bold mb-2">₹899</div>
               <p className="text-gray-400">Scale your team without scaling costs</p>
