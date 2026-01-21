@@ -60,29 +60,32 @@ const shakeAnimation = {
   transition: { duration: 0.4 },
 };
 
+const flipTransition = {
+  duration: 0.8,
+  ease: [0.4, 0, 0.2, 1],
+};
+
 const frontVariants = {
-  initial: { rotateY: 0, scale: 1 },
+  initial: { 
+    rotateY: 0,
+    opacity: 1,
+  },
   flipped: { 
-    rotateY: 180, 
-    scale: [1, 0.95, 1],
-    transition: { 
-      type: "spring", 
-      stiffness: 80, 
-      damping: 15 
-    } 
+    rotateY: 180,
+    opacity: 0,
+    transition: flipTransition,
   }
 };
 
 const backVariants = {
-  initial: { rotateY: -180, scale: 1 },
+  initial: { 
+    rotateY: -180,
+    opacity: 0,
+  },
   flipped: { 
-    rotateY: 0, 
-    scale: [1, 0.95, 1],
-    transition: { 
-      type: "spring", 
-      stiffness: 80, 
-      damping: 15 
-    } 
+    rotateY: 0,
+    opacity: 1,
+    transition: flipTransition,
   }
 };
 
@@ -287,30 +290,35 @@ export function PaymentStatusModal({
     <Dialog open={open} onOpenChange={handleModalClose}>
       <AnimatePresence>
         {open && (
-          <DialogContent className="sm:max-w-[420px] bg-black/95 border-white/10 backdrop-blur-xl text-white overflow-hidden">
-            <div style={{ perspective: "1000px" }} className="relative">
-              {/* Front Side - Payment Status */}
+          <DialogContent className="sm:max-w-[420px] bg-transparent border-none shadow-none text-white overflow-visible p-0">
+            <div 
+              className="relative w-full"
+              style={{ 
+                perspective: "1200px",
+                perspectiveOrigin: "center",
+              }}
+            >
+              {/* Flip Container */}
               <motion.div
-                variants={frontVariants}
-                initial="initial"
-                animate={isFlipped ? "flipped" : "initial"}
-                style={{ 
-                  backfaceVisibility: "hidden",
-                  transformStyle: "preserve-3d"
+                className="relative w-full"
+                style={{ transformStyle: "preserve-3d" }}
+                animate={{ 
+                  rotateY: isFlipped ? 180 : 0,
                 }}
-                className={isFlipped ? "pointer-events-none" : ""}
+                transition={flipTransition}
               >
-                <motion.div
-                  variants={modalVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
+                {/* Front Side - Payment Status */}
+                <div
+                  className={`w-full rounded-2xl bg-slate-900/95 border border-slate-700/50 backdrop-blur-xl p-6 ${isFlipped ? "pointer-events-none" : ""}`}
+                  style={{ 
+                    backfaceVisibility: "hidden",
+                  }}
                 >
                   <motion.div
                     variants={contentStagger}
                     initial="hidden"
                     animate="visible"
-                    className="flex flex-col items-center text-center py-6"
+                    className="flex flex-col items-center text-center"
                   >
                     <motion.div variants={contentItem}>
                       {config.icon}
@@ -373,29 +381,14 @@ export function PaymentStatusModal({
                       )}
                     </motion.div>
                   </motion.div>
-                </motion.div>
-              </motion.div>
+                </div>
 
-              {/* Back Side - Feedback Cards */}
-              <motion.div
-                variants={backVariants}
-                initial="initial"
-                animate={isFlipped ? "flipped" : "initial"}
-                style={{ 
-                  backfaceVisibility: "hidden",
-                  transformStyle: "preserve-3d",
-                  position: isFlipped ? "relative" : "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                }}
-                className={!isFlipped ? "pointer-events-none" : ""}
-              >
-                <div 
-                  className="py-6 rounded-xl"
-                  style={{
-                    backdropFilter: "blur(10px)",
-                    background: "rgba(15, 23, 42, 0.9)"
+                {/* Back Side - Feedback Cards */}
+                <div
+                  className={`absolute inset-0 w-full rounded-2xl bg-slate-900/95 border border-slate-700/50 backdrop-blur-xl p-6 ${!isFlipped ? "pointer-events-none" : ""}`}
+                  style={{ 
+                    backfaceVisibility: "hidden",
+                    transform: "rotateY(180deg)",
                   }}
                 >
                   {showThankYou ? (
