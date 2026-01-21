@@ -37,3 +37,22 @@ export const verifyPaymentSchema = z.object({
 
 export type CreateOrderInput = z.infer<typeof createOrderSchema>;
 export type VerifyPaymentInput = z.infer<typeof verifyPaymentSchema>;
+
+// Payment Feedback schema
+export const paymentFeedback = pgTable("payment_feedback", {
+  id: serial("id").primaryKey(),
+  feedbackReason: text("feedback_reason").notNull(),
+  userAgent: text("user_agent"),
+  ipAddress: text("ip_address"),
+  referrer: text("referrer"),
+  pageUrl: text("page_url"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertPaymentFeedbackSchema = createInsertSchema(paymentFeedback).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type PaymentFeedback = typeof paymentFeedback.$inferSelect;
+export type InsertPaymentFeedback = z.infer<typeof insertPaymentFeedbackSchema>;

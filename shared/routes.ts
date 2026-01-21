@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { insertAuditRequestSchema, auditRequests } from './schema';
+import { insertAuditRequestSchema, auditRequests, insertPaymentFeedbackSchema, paymentFeedback } from './schema';
 
 export const errorSchemas = {
   validation: z.object({
@@ -19,6 +19,18 @@ export const api = {
       input: insertAuditRequestSchema,
       responses: {
         201: z.custom<typeof auditRequests.$inferSelect>(),
+        400: errorSchemas.validation,
+        500: errorSchemas.internal,
+      },
+    },
+  },
+  feedback: {
+    create: {
+      method: 'POST' as const,
+      path: '/api/feedback',
+      input: insertPaymentFeedbackSchema,
+      responses: {
+        201: z.object({ success: z.boolean(), message: z.string() }),
         400: errorSchemas.validation,
         500: errorSchemas.internal,
       },

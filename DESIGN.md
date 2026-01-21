@@ -404,3 +404,234 @@ DOWNLOAD_SECRET=your-secret-key-for-signing-tokens
 4. Update `server/routes.ts` to register download routes
 5. Update `BuyNowButton.tsx` to trigger download on success
 6. Update `PaymentStatusModal.tsx` to show download status
+
+---
+
+## Payment Cancellation Feedback Feature
+
+### Story Goal
+When user cancels payment, add a "Cancel" button below "Try Again". On click, card flips to show 4 feedback options. Save feedback to database.
+
+### New Database Table
+```sql
+CREATE TABLE payment_feedback (
+  id SERIAL PRIMARY KEY,
+  feedback_reason TEXT NOT NULL,
+  user_agent TEXT,
+  ip_address TEXT,
+  referrer TEXT,
+  page_url TEXT,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+### New/Modified Files
+| File | Path | Changes |
+|------|------|---------|
+| `schema.ts` | `shared/schema.ts` | Add `paymentFeedback` table schema |
+| `routes.ts` | `shared/routes.ts` | Add feedback API contract |
+| `storage.ts` | `server/storage.ts` | Add `createPaymentFeedback` method |
+| `feedback.ts` | `server/feedback.ts` | NEW: Feedback API endpoint |
+| `routes.ts` | `server/routes.ts` | Register feedback routes |
+| `PaymentStatusModal.tsx` | `client/src/components/PaymentStatusModal.tsx` | Add Cancel button, flip animation, feedback cards |
+| `use-feedback.ts` | `client/src/hooks/use-feedback.ts` | NEW: Hook for feedback API |
+
+### API Contract
+
+#### POST /api/feedback
+**Request:**
+```typescript
+{
+  feedback_reason: string;  // "too_expensive" | "just_browsing" | "need_more_features" | "will_buy_later"
+  user_agent?: string;
+  referrer?: string;
+  page_url?: string;
+}
+```
+
+**Response (201):**
+```typescript
+{
+  success: true;
+  message: "Feedback submitted successfully"
+}
+```
+
+### Animation Design (Enhanced)
+
+#### Card Flip Animation with Spring Physics & Depth
+```typescript
+// Container needs perspective for 3D effect
+const containerStyle = {
+  perspective: "1000px"
+};
+
+// Front card - spring physics + scale keyframes for depth
+const frontVariants = {
+  initial: { rotateY: 0, scale: 1 },
+  flipped: { 
+    rotateY: 180, 
+    scale: [1, 0.95, 1], // shrink mid-flip for 3D depth
+    transition: { 
+      type: "spring", 
+      stiffness: 80, 
+      damping: 15 
+    } 
+  }
+};
+
+// Back card - spring physics + scale keyframes
+const backVariants = {
+  initial: { rotateY: -180, scale: 1 },
+  flipped: { 
+    rotateY: 0, 
+    scale: [1, 0.95, 1],
+    transition: { 
+      type: "spring", 
+      stiffness: 80, 
+      damping: 15 
+    } 
+  }
+};
+
+// Back card glassmorphism style
+const backCardStyle = {
+  backdropFilter: "blur(10px)",
+  background: "rgba(15, 23, 42, 0.9)"
+};
+```
+
+#### Feedback Card Hover with Gradient Border
+```typescript
+const feedbackCardVariants = {
+  initial: { 
+    scale: 1, 
+    y: 0,
+    background: "linear-gradient(135deg, #1a1a2e, #16213e)"
+  },
+  hover: { 
+    scale: 1.05, 
+    y: -8,
+    background: "linear-gradient(135deg, #0f3460, #1a1a2e)",
+    boxShadow: "0 0 20px rgba(99, 102, 241, 0.3), 0 10px 40px rgba(0,0,0,0.4)",
+    transition: { duration: 0.15, ease: "easeOut" }
+  },
+  tap: { scale: 0.98 }
+};
+```
+
+#### Icon Animation on Hover
+```typescript
+const iconVariants = {
+  initial: { rotate: 0, scale: 1 },
+  hover: { 
+    rotate: [0, -10, 10, 0], 
+    scale: 1.2,
+    transition: { duration: 0.4 }
+  }
+};
+```
+
+#### Stagger Animation for Cards
+```typescript
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.3 }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.2, ease: "easeOut" }
+  }
+};
+```
+
+#### Thank You Particle Burst
+```typescript
+const thankYouVariants = {
+  initial: { scale: 0, opacity: 0 },
+  animate: { 
+    scale: [0, 1.1, 1], 
+    opacity: 1,
+    transition: { type: "spring", stiffness: 200 }
+  }
+};
+```
+
+### Style Improvements
+| Current | Enhanced |
+|---------|----------|
+| Flat shadows | Multi-layered shadows with indigo tint |
+| Instant hover | 150ms ease-out transitions |
+| Static icons | Lucide icons with rotation animation |
+| Plain background | Glassmorphism with backdrop blur |
+
+### Feedback Options
+| ID | Label | Icon |
+|----|-------|------|
+| `too_expensive` | "Too expensive" | DollarSign |
+| `just_browsing` | "Just browsing" | Eye |
+| `need_more_features` | "Need more features" | Sparkles |
+| `will_buy_later` | "Will buy later" | Clock |
+
+### UI Layout (Flipped Side)
+```
+┌─────────────────────────────────────┐
+│     Why did you decide not to       │
+│          purchase today?            │
+│                                     │
+│  ┌─────────────┐  ┌─────────────┐  │
+│  │     💰      │  │     👁️      │  │
+│  │    Too      │  │    Just     │  │
+│  │  expensive  │  │  browsing   │  │
+│  └─────────────┘  └─────────────┘  │
+│                                     │
+│  ┌─────────────┐  ┌─────────────┐  │
+│  │     ✨      │  │     🕐      │  │
+│  │   Need more │  │  Will buy   │  │
+│  │  features   │  │   later     │  │
+│  └─────────────┘  └─────────────┘  │
+│                                     │
+│         [Skip feedback]             │
+└─────────────────────────────────────┘
+```
+
+### Definition of Done
+- [ ] `paymentFeedback` table schema added
+- [ ] Feedback API endpoint created
+- [ ] Cancel button added below Try Again
+- [ ] 3D card flip animation works
+- [ ] 4 feedback cards display with hover effects
+- [ ] Feedback saved to database on selection
+- [ ] Thank you message shown after selection
+- [ ] Modal closes after feedback
+
+### Do Not Touch
+- Success/failure payment flows
+- Existing animation patterns (extend, don't replace)
+- Razorpay integration
+
+### Implementation Phases
+
+**Phase 7A: Database & API**
+1. Add `paymentFeedback` table to `shared/schema.ts`
+2. Add feedback API contract to `shared/routes.ts`
+3. Add `createPaymentFeedback` to `server/storage.ts`
+4. Create `server/feedback.ts` with POST endpoint
+5. Register feedback routes in `server/routes.ts`
+
+**Phase 7B: Frontend Hook**
+1. Create `client/src/hooks/use-feedback.ts`
+
+**Phase 7C: UI Implementation**
+1. Add Cancel button to cancelled state in `PaymentStatusModal.tsx`
+2. Implement 3D card flip animation
+3. Create feedback cards grid with hover animations
+4. Connect to feedback API
+5. Add thank you state and auto-close
