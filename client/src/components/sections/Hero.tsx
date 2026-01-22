@@ -26,18 +26,18 @@ export function Hero() {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-gray-400">
-            Your AI Tools Are Burning <br className="hidden md:block" />
-            <span className="text-primary text-glow">₹5L/Year</span> Doing Nothing
+            Stop Babysitting Your AI. <br className="hidden md:block" />
+            <span className="text-primary text-glow">Start Shipping.</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            We turn <span className="text-white font-bold">10% success rates</span> into <span className="text-primary font-bold">90% ROI</span> in just 14 days.<br />
-            <span className="text-white font-medium">Same tools. Same developers. 10x productivity.</span>
+            Cursor, Windsurf & Copilot work—when you know how to use them.<br />
+            <span className="text-white font-medium">6 workflows. Instant setup. 90% success rate.</span>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
             <BuyNowButton size="lg" className="h-14 px-8 text-lg bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 rounded-xl border-t border-white/20">
-              Buy Now <ShoppingCart className="ml-2 h-5 w-5" />
+              <ShoppingCart className="mr-2 h-5 w-5" /> Get the Workflows
             </BuyNowButton>
             <a href="#how-it-works">
               <Button size="lg" variant="outline" className="h-14 px-8 text-lg bg-white/5 border-white/10 hover:bg-white/10 text-white rounded-xl backdrop-blur-sm">
@@ -52,7 +52,7 @@ export function Hero() {
           {[
             { icon: Zap, label: "Efficiency Boost", value: "300%", color: "text-yellow-400" },
             { icon: Bot, label: "Tool Adoption", value: "92%", color: "text-primary" },
-            { icon: BarChart3, label: "Cost Saved", value: "₹12L+", color: "text-green-400" },
+            { icon: BarChart3, label: "Faster Shipping", value: "10x", color: "text-green-400" },
           ].map((stat, i) => (
             <motion.div
               key={i}
