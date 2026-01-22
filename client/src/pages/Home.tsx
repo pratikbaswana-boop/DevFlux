@@ -47,12 +47,12 @@ export default function Home() {
                 <h3 className="text-2xl font-bold text-red-400 mb-8">BEFORE DevFlux</h3>
                 <ul className="space-y-4">
                   {[
-                    "90 developers",
-                    "₹5L/year on Windsurf",
-                    "<20% adoption",
-                    "10% success rate",
-                    "Negative ROI",
-                    "Frustrated developers"
+                    "AI outputs need constant fixing",
+                    "More time debugging than coding",
+                    "\"Works in tutorials, breaks on my codebase\"",
+                    "10% of prompts actually usable",
+                    "Developers avoiding AI tools",
+                    "Shipping slower than before AI"
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-3 text-gray-400">
                       <span className="w-6 h-6 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 text-sm">✕</span>
@@ -65,12 +65,12 @@ export default function Home() {
                 <h3 className="text-2xl font-bold text-green-400 mb-8">AFTER DevFlux</h3>
                 <ul className="space-y-4">
                   {[
-                    "Same 90 developers",
-                    "Same Windsurf",
-                    "80% adoption",
-                    "90% success rate",
-                    "10x ROI",
-                    "Daily active usage"
+                    "AI outputs ship-ready code",
+                    "Devs code, AI assists (not reverse)",
+                    "Works on YOUR codebase, day 1",
+                    "90% success rate on prompts",
+                    "Daily active usage across team",
+                    "10x faster feature delivery"
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-3 text-white font-medium">
                       <span className="w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 text-sm">✓</span>
@@ -81,7 +81,7 @@ export default function Home() {
               </div>
             </div>
             <div className="mt-12 text-center text-gray-400">
-              <p className="text-lg mb-4">🚀 External Proof: We built <strong>fyndfox.com</strong> in 2 weeks to prove it works.</p>
+              <p className="text-lg mb-4">🚀 Proof: We built <strong>fyndfox.com</strong> in 2 weeks using these exact workflows.</p>
             </div>
           </div>
         </section>
