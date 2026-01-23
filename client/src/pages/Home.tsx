@@ -7,13 +7,17 @@ import { ROICalculator } from "@/components/sections/ROICalculator";
 import { Pricing } from "@/components/sections/Pricing";
 import { FAQ } from "@/components/sections/FAQ";
 import { BuyNowButton } from "@/components/BuyNowButton";
+import { PromoBanner } from "@/components/PromoBanner";
 import { ShieldCheck, Clock, Award, ShoppingCart } from "lucide-react";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary/30">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-lg border-b border-white/5">
+      {/* Promo Banner */}
+      <PromoBanner />
+      
+      {/* Navigation - adjusted top position to account for banner */}
+      <nav className="fixed top-10 left-0 right-0 z-50 bg-black/50 backdrop-blur-lg border-b border-white/5">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="text-xl font-display font-bold flex items-center gap-2">
             <img src="/logo.svg" alt="DevFlux" className="h-10 w-auto" />

@@ -23,7 +23,7 @@ interface PaymentStatusModalProps {
 
 const feedbackOptions = [
   { id: "too_expensive", label: "Too expensive", icon: DollarSign },
-  { id: "just_browsing", label: "Just browsing", icon: Eye },
+  { id: "payment_method_not_supported", label: "Payment method not supported", icon: Eye },
   { id: "need_more_features", label: "Need more features", icon: Sparkles },
   { id: "will_buy_later", label: "Will buy later", icon: Clock },
 ];

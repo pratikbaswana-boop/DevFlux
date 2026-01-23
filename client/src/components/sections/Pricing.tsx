@@ -1,5 +1,9 @@
-import { Check, Users, ShoppingCart } from "lucide-react";
+import { Check, Users, ShoppingCart, Zap } from "lucide-react";
 import { BuyNowButton } from "@/components/BuyNowButton";
+import { CountdownTimer } from "@/components/CountdownTimer";
+
+// Set offer end date to 7 days from now (you can adjust this)
+const OFFER_END_DATE = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
 const features = [
   "6 battle-tested workflow files",
@@ -25,8 +29,9 @@ export function Pricing() {
 
         <div className="max-w-lg mx-auto">
           <div className="relative flex flex-col p-10 rounded-2xl border bg-primary/5 border-primary shadow-2xl shadow-primary/10">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full">
-              LIFETIME ACCESS
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg shadow-primary/30">
+              <Zap className="w-3 h-3" />
+              LAUNCH SPECIAL
             </div>
             
             <div className="text-center mb-8">
@@ -34,8 +39,13 @@ export function Pricing() {
                 <Users className="w-6 h-6 text-primary" />
                 <span className="text-gray-400">One-Time Payment / Lifetime Access</span>
               </div>
-              <div className="text-6xl font-bold mb-2">₹899</div>
-              <p className="text-gray-400">Scale your team without scaling costs</p>
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <span className="text-2xl text-gray-500 line-through">₹1,499</span>
+                <div className="text-6xl font-bold text-white">₹899</div>
+                <span className="bg-green-500/20 text-green-400 text-sm font-bold px-2 py-1 rounded-full">40% OFF</span>
+              </div>
+              <p className="text-gray-400 mb-4">Scale your team without scaling costs</p>
+              <CountdownTimer targetDate={OFFER_END_DATE} />
             </div>
 
             <ul className="space-y-4 mb-8">
