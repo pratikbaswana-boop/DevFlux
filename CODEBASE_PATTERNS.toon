@@ -1,0 +1,131 @@
+// CODEBASE_PATTERNS.toon
+// Patterns extracted for Analytics Tracking implementation
+
+REFERENCE_FEATURE {
+  name: "payment_feedback"
+  description: "Existing feedback collection system - similar data capture pattern"
+  
+  FILES {
+    schema: "shared/schema.ts"
+    storage: "server/storage.ts"
+    routes_shared: "shared/routes.ts"
+    routes_server: "server/feedback.ts"
+    main_routes: "server/routes.ts"
+  }
+}
+
+ARCHITECTURE_PATTERN {
+  // Database Schema Pattern
+  schema {
+    location: "shared/schema.ts"
+    orm: "drizzle-orm"
+    pattern: """
+      export const tableName = pgTable("table_name", {
+        id: serial("id").primaryKey(),
+        field: text("field").notNull(),
+        createdAt: timestamp("created_at").defaultNow(),
+      });
+      
+      export const insertSchema = createInsertSchema(tableName).omit({
+        id: true,
+        createdAt: true
+      });
+      
+      export type TableType = typeof tableName.$inferSelect;
+      export type InsertTableType = z.infer<typeof insertSchema>;
+    """
+  }
+  
+  // Storage Pattern
+  storage {
+    location: "server/storage.ts"
+    pattern: """
+      // Add to IStorage interface
+      createMethod(data: InsertType): Promise<Type>;
+      
+      // Add to DatabaseStorage class
+      async createMethod(data: InsertType): Promise<Type> {
+        const [result] = await db.insert(table).values(data).returning();
+        return result;
+      }
+    """
+  }
+  
+  // Shared Routes Pattern
+  shared_routes {
+    location: "shared/routes.ts"
+    pattern: """
+      export const api = {
+        feature: {
+          create: {
+            method: 'POST' as const,
+            path: '/api/feature',
+            input: insertSchema,
+            responses: {
+              201: z.object({ success: z.boolean() }),
+              400: errorSchemas.validation,
+              500: errorSchemas.internal,
+            },
+          },
+        },
+      };
+    """
+  }
+  
+  // Server Routes Pattern
+  server_routes {
+    location: "server/feature.ts"
+    pattern: """
+      export function registerFeatureRoutes(app: Express) {
+        app.post(api.feature.create.path, async (req, res) => {
+          try {
+            const input = api.feature.create.input.parse(req.body);
+            await storage.createMethod(input);
+            res.status(201).json({ success: true });
+          } catch (err) {
+            if (err instanceof z.ZodError) {
+              return res.status(400).json({ message: err.errors[0].message });
+            }
+            res.status(500).json({ message: "Internal server error" });
+          }
+        });
+      }
+    """
+  }
+  
+  // Main Routes Registration
+  main_routes {
+    location: "server/routes.ts"
+    pattern: "registerFeatureRoutes(app);"
+  }
+}
+
+NAMING_CONVENTIONS {
+  tables: "snake_case (e.g., payment_feedback, visitor_sessions)"
+  columns: "snake_case (e.g., user_agent, created_at)"
+  types: "PascalCase (e.g., VisitorSession, InsertVisitorSession)"
+  api_paths: "kebab-case (e.g., /api/analytics/event)"
+  files: "camelCase or kebab-case (e.g., analytics.ts)"
+}
+
+ERROR_HANDLING {
+  server: """
+    try {
+      // logic
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({ message: err.errors[0].message });
+      }
+      console.error("Error:", err);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  """
+}
+
+UTILITIES_TO_REUSE {
+  - "db from server/db.ts"
+  - "pgTable, text, serial, integer, timestamp from drizzle-orm/pg-core"
+  - "createInsertSchema from drizzle-zod"
+  - "z from zod"
+  - "api pattern from shared/routes.ts"
+}

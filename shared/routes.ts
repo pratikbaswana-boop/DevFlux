@@ -1,5 +1,11 @@
 import { z } from 'zod';
-import { insertAuditRequestSchema, auditRequests, insertPaymentFeedbackSchema, paymentFeedback } from './schema';
+import { 
+  insertAuditRequestSchema, auditRequests, 
+  insertPaymentFeedbackSchema, paymentFeedback,
+  insertVisitorSessionSchema, visitorSessions,
+  insertAnalyticsEventSchema, analyticsEvents,
+  updateSessionEndSchema
+} from './schema';
 
 export const errorSchemas = {
   validation: z.object({
@@ -31,6 +37,38 @@ export const api = {
       input: insertPaymentFeedbackSchema,
       responses: {
         201: z.object({ success: z.boolean(), message: z.string() }),
+        400: errorSchemas.validation,
+        500: errorSchemas.internal,
+      },
+    },
+  },
+  analytics: {
+    createSession: {
+      method: 'POST' as const,
+      path: '/api/analytics/session',
+      input: insertVisitorSessionSchema,
+      responses: {
+        201: z.object({ success: z.boolean(), sessionId: z.string() }),
+        400: errorSchemas.validation,
+        500: errorSchemas.internal,
+      },
+    },
+    endSession: {
+      method: 'POST' as const,
+      path: '/api/analytics/session/end',
+      input: updateSessionEndSchema,
+      responses: {
+        200: z.object({ success: z.boolean() }),
+        400: errorSchemas.validation,
+        500: errorSchemas.internal,
+      },
+    },
+    trackEvent: {
+      method: 'POST' as const,
+      path: '/api/analytics/event',
+      input: insertAnalyticsEventSchema,
+      responses: {
+        201: z.object({ success: z.boolean() }),
         400: errorSchemas.validation,
         500: errorSchemas.internal,
       },

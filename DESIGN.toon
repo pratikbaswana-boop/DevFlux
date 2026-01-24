@@ -1,0 +1,274 @@
+// DESIGN.toon
+// Visitor Analytics Tracking System - Implementation Design
+
+STORY_GOAL: "Capture all visitor data, behavior, and conversion events in database"
+
+COMPONENTS {
+  NEW {
+    // Database Schema
+    "shared/schema.ts" {
+      additions: [
+        "visitorSessions table",
+        "analyticsEvents table", 
+        "insertVisitorSessionSchema",
+        "insertAnalyticsEventSchema"
+      ]
+    }
+    
+    // Server Routes
+    "server/analytics.ts" {
+      description: "Analytics API routes"
+      endpoints: [
+        "POST /api/analytics/session - Create/update session",
+        "POST /api/analytics/event - Track events"
+      ]
+    }
+    
+    // Client Tracking
+    "client/src/hooks/useAnalytics.ts" {
+      description: "Analytics tracking hook"
+      features: [
+        "Session management (localStorage)",
+        "Event tracking functions",
+        "Automatic page view tracking",
+        "Scroll depth tracking",
+        "Click tracking",
+        "Exit intent detection"
+      ]
+    }
+    
+    "client/src/components/AnalyticsProvider.tsx" {
+      description: "Provider component that initializes tracking"
+    }
+  }
+  
+  MODIFIED {
+    "shared/routes.ts" {
+      additions: ["analytics API definitions"]
+    }
+    
+    "server/storage.ts" {
+      additions: ["createVisitorSession", "updateVisitorSession", "createAnalyticsEvent"]
+    }
+    
+    "server/routes.ts" {
+      additions: ["registerAnalyticsRoutes(app)"]
+    }
+    
+    "client/src/App.tsx" {
+      additions: ["Wrap with AnalyticsProvider"]
+    }
+  }
+}
+
+DATA_MODEL {
+  // Table 1: Visitor Sessions
+  visitor_sessions {
+    id: "serial PRIMARY KEY"
+    visitor_id: "text NOT NULL - UUID stored in localStorage"
+    session_id: "text NOT NULL - UUID per session"
+    
+    // Visitor Info
+    utm_source: "text"
+    utm_medium: "text"
+    utm_campaign: "text"
+    utm_content: "text"
+    utm_term: "text"
+    referrer: "text"
+    landing_page: "text"
+    
+    // Device Info
+    device_type: "text - mobile/desktop/tablet"
+    browser: "text"
+    browser_version: "text"
+    os: "text"
+    screen_width: "integer"
+    screen_height: "integer"
+    timezone: "text"
+    language: "text"
+    
+    // Session Data
+    is_returning: "boolean"
+    visit_count: "integer"
+    session_start: "timestamp"
+    session_end: "timestamp"
+    session_duration: "integer - seconds"
+    
+    // Metadata
+    ip_address: "text"
+    user_agent: "text"
+    created_at: "timestamp DEFAULT NOW()"
+  }
+  
+  // Table 2: Analytics Events
+  analytics_events {
+    id: "serial PRIMARY KEY"
+    visitor_id: "text NOT NULL"
+    session_id: "text NOT NULL"
+    
+    // Event Data
+    event_type: "text NOT NULL - page_view, click, scroll, exit_intent, etc."
+    event_category: "text - conversion, behavior, navigation"
+    event_action: "text - specific action"
+    event_label: "text - additional context"
+    event_value: "integer - numeric value if applicable"
+    
+    // Context
+    page_url: "text"
+    element_id: "text - for clicks"
+    element_text: "text - button/link text"
+    scroll_depth: "integer - percentage"
+    time_on_page: "integer - seconds"
+    
+    // Metadata
+    created_at: "timestamp DEFAULT NOW()"
+  }
+}
+
+API_CONTRACT {
+  // Create/Update Session
+  POST "/api/analytics/session" {
+    input: {
+      visitor_id: "string"
+      session_id: "string"
+      utm_source?: "string"
+      utm_medium?: "string"
+      utm_campaign?: "string"
+      utm_content?: "string"
+      utm_term?: "string"
+      referrer?: "string"
+      landing_page?: "string"
+      device_type?: "string"
+      browser?: "string"
+      browser_version?: "string"
+      os?: "string"
+      screen_width?: "number"
+      screen_height?: "number"
+      timezone?: "string"
+      language?: "string"
+      is_returning?: "boolean"
+      visit_count?: "number"
+    }
+    response: { success: true, session_id: "string" }
+  }
+  
+  // Update Session End
+  POST "/api/analytics/session/end" {
+    input: {
+      session_id: "string"
+      session_duration: "number"
+    }
+    response: { success: true }
+  }
+  
+  // Track Event
+  POST "/api/analytics/event" {
+    input: {
+      visitor_id: "string"
+      session_id: "string"
+      event_type: "string"
+      event_category?: "string"
+      event_action?: "string"
+      event_label?: "string"
+      event_value?: "number"
+      page_url?: "string"
+      element_id?: "string"
+      element_text?: "string"
+      scroll_depth?: "number"
+      time_on_page?: "number"
+    }
+    response: { success: true }
+  }
+}
+
+EVENT_TYPES {
+  // Behavior Events
+  "page_view": "When page loads"
+  "scroll_25": "Scrolled 25%"
+  "scroll_50": "Scrolled 50%"
+  "scroll_75": "Scrolled 75%"
+  "scroll_100": "Scrolled 100%"
+  "time_on_page": "Periodic time updates"
+  "exit_intent": "Mouse moved to close tab"
+  
+  // Conversion Events
+  "buy_button_click": "Any Buy Now button clicked"
+  "pricing_view": "Pricing section in viewport"
+  "payment_modal_open": "Payment modal opened"
+  "payment_modal_close": "Payment modal closed without purchase"
+  
+  // Navigation Events
+  "link_click": "Any link clicked"
+  "nav_click": "Navigation item clicked"
+  "cta_click": "CTA button clicked"
+}
+
+IMPLEMENTATION_PHASES {
+  phase_1: "Database Schema" {
+    files: ["shared/schema.ts"]
+    tasks: [
+      "Add visitor_sessions table",
+      "Add analytics_events table",
+      "Add insert schemas and types"
+    ]
+  }
+  
+  phase_2: "Server Storage & Routes" {
+    files: ["server/storage.ts", "shared/routes.ts", "server/analytics.ts", "server/routes.ts"]
+    tasks: [
+      "Add storage methods",
+      "Add API route definitions",
+      "Create analytics routes file",
+      "Register routes"
+    ]
+  }
+  
+  phase_3: "Client Tracking" {
+    files: ["client/src/hooks/useAnalytics.ts", "client/src/components/AnalyticsProvider.tsx", "client/src/App.tsx"]
+    tasks: [
+      "Create useAnalytics hook",
+      "Create AnalyticsProvider",
+      "Integrate into App"
+    ]
+  }
+  
+  phase_4: "Event Integration" {
+    files: ["client/src/components/BuyNowButton.tsx", "client/src/components/sections/Pricing.tsx"]
+    tasks: [
+      "Add conversion tracking to Buy buttons",
+      "Add pricing section view tracking"
+    ]
+  }
+}
+
+DEFINITION_OF_DONE {
+  - "All visitor sessions captured with full device/UTM info"
+  - "All events tracked and stored in database"
+  - "Session duration calculated on page unload"
+  - "Scroll depth tracked at 25%, 50%, 75%, 100%"
+  - "Buy button clicks tracked"
+  - "Payment modal open/close tracked"
+  - "Exit intent detected and tracked"
+  - "Returning visitors identified"
+}
+
+DECISIONS_LOG {
+  - "Two tables (sessions + events) for normalized data"
+  - "visitor_id in localStorage for cross-session tracking"
+  - "session_id generated fresh each visit"
+  - "Events sent immediately (no batching per user request)"
+  - "No GDPR consent required (per user)"
+}
+
+DO_NOT_TOUCH {
+  - "Payment flow (payment.ts, BuyNowButton payment logic)"
+  - "Existing feedback system"
+  - "Razorpay integration"
+  - "Download system"
+}
+
+ROLLBACK_POINTS {
+  - "After Phase 1: Can revert schema changes"
+  - "After Phase 2: Can remove routes"
+  - "After Phase 3: Can remove provider"
+}

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useCreateOrder, useVerifyPayment } from "@/hooks/use-payment";
 import { Loader2 } from "lucide-react";
 import { PaymentStatusModal } from "@/components/PaymentStatusModal";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 declare global {
   interface Window {
@@ -35,6 +36,7 @@ export function BuyNowButton({
   const [downloadToken, setDownloadToken] = useState<string | undefined>();
   const createOrder = useCreateOrder();
   const verifyPayment = useVerifyPayment();
+  const { trackBuyButtonClick, trackPaymentModalOpen, trackPaymentModalClose } = useAnalytics();
 
   const triggerDownload = (token: string) => {
     const downloadUrl = `/api/download/${token}`;
@@ -48,6 +50,8 @@ export function BuyNowButton({
 
   const handlePayment = async () => {
     setLoading(true);
+    trackBuyButtonClick(productName);
+    trackPaymentModalOpen();
 
     try {
       const orderData = await createOrder.mutateAsync({
@@ -111,6 +115,7 @@ export function BuyNowButton({
         },
         modal: {
           ondismiss: function () {
+            trackPaymentModalClose();
             setPaymentStatus("cancelled");
             setModalOpen(true);
             setLoading(false);

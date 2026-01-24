@@ -6,6 +6,7 @@ import { z } from "zod";
 import { registerPaymentRoutes } from "./payment";
 import { registerDownloadRoutes } from "./download";
 import { registerFeedbackRoutes } from "./feedback";
+import { registerAnalyticsRoutes } from "./analytics";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -20,6 +21,9 @@ export async function registerRoutes(
   
   // Register feedback routes
   registerFeedbackRoutes(app);
+  
+  // Register analytics routes
+  registerAnalyticsRoutes(app);
   
   app.post(api.audit.create.path, async (req, res) => {
     try {

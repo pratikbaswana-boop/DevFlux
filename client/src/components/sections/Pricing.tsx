@@ -1,6 +1,8 @@
 import { Check, Users, ShoppingCart, Zap } from "lucide-react";
 import { BuyNowButton } from "@/components/BuyNowButton";
 import { CountdownTimer } from "@/components/CountdownTimer";
+import { useEffect, useRef } from "react";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 // Set offer end date to 7 days from now (you can adjust this)
 const OFFER_END_DATE = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
@@ -15,8 +17,32 @@ const features = [
 ];
 
 export function Pricing() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const hasTracked = useRef(false);
+  const { trackPricingView } = useAnalytics();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasTracked.current) {
+            hasTracked.current = true;
+            trackPricingView();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [trackPricingView]);
+
   return (
-    <section className="py-24 bg-black relative">
+    <section ref={sectionRef} className="py-24 bg-black relative">
       <div className="container px-4 mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">

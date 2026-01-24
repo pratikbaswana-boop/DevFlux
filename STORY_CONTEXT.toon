@@ -1,0 +1,88 @@
+// STORY_CONTEXT.toon
+// Comprehensive Visitor Analytics Tracking System
+
+STORY {
+  title: "Visitor Analytics Tracking System"
+  goal: "Capture all visitor data, behavior, and conversion events in database for later analysis"
+  
+  REQUIREMENTS {
+    // 1. Visitor Information
+    visitor_info {
+      utm_parameters: ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]
+      referrer_url: "Where visitor came from"
+      landing_page: "First page visited"
+      device_info: "Mobile vs Desktop, OS, Browser type/version"
+      screen_resolution: "Width x Height"
+      timezone: "User timezone"
+      language: "Browser language"
+    }
+    
+    // 2. Behavior Tracking
+    behavior {
+      page_views: "Track which sections/pages they view"
+      time_on_page: "Duration spent on each page"
+      click_events: "Buttons, links, CTAs clicked"
+      scroll_depth: "How far down they scroll (25%, 50%, 75%, 100%)"
+      exit_intent: "When mouse moves toward closing tab"
+    }
+    
+    // 3. Conversion Funnel
+    conversion {
+      buy_button_clicks: "Track all Buy Now button clicks"
+      payment_modal_opens: "When payment modal is opened"
+      payment_modal_closes: "When payment modal is closed without purchase"
+      pricing_section_views: "When pricing section comes into viewport"
+    }
+    
+    // 4. Session Data
+    session {
+      visitor_id: "Unique identifier (stored in localStorage)"
+      session_id: "Unique per session"
+      is_returning: "First visit vs returning visitor"
+      visit_count: "Number of total visits"
+      session_duration: "Total time in session"
+      session_start: "When session started"
+      session_end: "When session ended (on unload)"
+    }
+  }
+  
+  ACCEPTANCE_CRITERIA {
+    - "All visitor data stored in PostgreSQL database"
+    - "Tracking is automatic and silent (no user consent required)"
+    - "No login system - anonymous tracking only"
+    - "Data stored for later analysis dashboard (separate project)"
+    - "Track every detail without performance concerns"
+    - "Events sent immediately (no batching)"
+  }
+  
+  SCOPE {
+    in_scope: [
+      "Database schema design",
+      "Server API endpoints",
+      "Client-side tracking hooks",
+      "Session management with localStorage",
+      "Event tracking utilities"
+    ]
+    out_of_scope: [
+      "Analysis dashboard (separate project)",
+      "User authentication",
+      "GDPR consent (not required per user)"
+    ]
+  }
+  
+  DEPENDENCIES {
+    existing: [
+      "PostgreSQL database (Render)",
+      "Drizzle ORM",
+      "Express server",
+      "React client"
+    ]
+    similar_feature: "payment_feedback table (different pattern but same tech stack)"
+  }
+  
+  CONSTRAINTS {
+    - "No batching - immediate event sending"
+    - "No performance limits - track everything"
+    - "Anonymous only - no user accounts"
+  }
+}
