@@ -1,63 +1,129 @@
 # CODEBASE_PATTERNS.md
 
 ## Reference Feature Analyzed
-**AuditModal** - Modal-based form component that triggers on button click, collects user data, and submits to backend API.
+**Landing Page Sections** - Section-based components with animations, responsive design, and consistent styling patterns.
 
-### Payment Status Popup Reference
-- **Dialog Component**: Uses `@radix-ui/react-dialog` via `@/components/ui/dialog`
-- **Styling**: Dark theme with `bg-black/90 border-white/10 backdrop-blur-xl text-white`
-- **Animations**: Built-in Radix animations (`animate-in`, `fade-in`, `zoom-in-95`)
-- **Framer Motion**: Available for custom animations (used in Hero, sections)
+### Key Reference Components
+- **HowSimpleIsIt.tsx** - Contains before/after comparison cards, terminal animation, command showcase
+- **SetupSection.tsx** - Contains 3-step setup with terminal animation, IDE tabs
+- **Hero.tsx** - Contains headline, subheadline, CTA buttons, stats cards
+- **Pricing.tsx** - Contains pricing card with features list
 
 ## Architecture Pattern
 
-### Frontend (React + TypeScript)
-- **Component Structure**: Functional components with hooks
-- **State Management**: React Query (`@tanstack/react-query`) for server state
-- **Form Handling**: `react-hook-form` with `zod` validation via `@hookform/resolvers`
-- **UI Components**: shadcn/ui components (`@/components/ui/*`)
-- **Styling**: TailwindCSS with custom theme colors (primary, secondary)
-- **Animations**: Framer Motion for transitions
+### Section Component Structure
+```tsx
+export function SectionName() {
+  return (
+    <section className="py-24 bg-black relative overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute ... bg-primary/10 blur-[120px]" />
+      
+      <div className="container px-4 mx-auto relative z-10">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
+            Title <span className="text-primary">Highlight</span>
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto">Description</p>
+        </div>
+        
+        {/* Content */}
+      </div>
+    </section>
+  );
+}
+```
 
-### Backend (Express + TypeScript)
-- **API Structure**: Routes defined in `server/routes.ts`
-- **Shared Types**: Zod schemas in `shared/schema.ts`, API contracts in `shared/routes.ts`
-- **Validation**: Zod for input validation on both client and server
+### Animation Patterns (Framer Motion)
+```tsx
+// Fade in on scroll
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ delay: i * 0.1 }}
+  viewport={{ once: true }}
+>
 
-### Button Locations to Replace
-1. **Hero.tsx** (line 39-43): "Book Free Audit" button wrapped in `<AuditModal>`
-2. **Hero.tsx** (line 44-48): "See How It Works" button (keep as is)
-3. **Home.tsx** (line 26-30): Nav "Book Audit" button wrapped in `<AuditModal>`
-4. **Home.tsx** (line 133-137): Final CTA "Book Your Audit Now" wrapped in `<AuditModal>`
-5. **Pricing.tsx** (line 53-57): "Get Started" button wrapped in `<AuditModal>`
+// Hover effects
+<motion.div whileHover={{ y: -5, scale: 1.02 }}>
+
+// Typing cursor animation
+<motion.span
+  animate={{ opacity: [1, 0] }}
+  transition={{ repeat: Infinity, duration: 0.8 }}
+  className="inline-block w-2 h-5 bg-primary"
+/>
+```
+
+### Terminal Component Pattern (from SetupSection)
+```tsx
+<div className="bg-[#0d1117] border border-[#30363d] rounded-xl overflow-hidden">
+  {/* Header with traffic lights */}
+  <div className="bg-[#161b22] px-4 py-2 border-b border-[#30363d] flex items-center gap-2">
+    <div className="flex gap-1.5">
+      <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+      <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+      <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+    </div>
+    <span className="text-xs text-gray-500 font-mono ml-4">Terminal</span>
+  </div>
+  {/* Content */}
+  <div className="p-6 font-mono text-sm">...</div>
+</div>
+```
+
+### Before/After Comparison Pattern (from HowSimpleIsIt)
+```tsx
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+  {/* Before - Red theme */}
+  <div className="p-8 rounded-2xl bg-red-500/5 border border-red-500/10">
+    <h4 className="text-xl font-bold text-red-400 mb-6">Without DevFlux</h4>
+    ...
+    <p className="text-red-400 font-bold">⏱️ 3 hours of guessing</p>
+  </div>
+  
+  {/* After - Green/Primary theme */}
+  <div className="p-8 rounded-2xl bg-primary/5 border border-primary shadow-[0_0_20px_rgba(139,92,246,0.2)]">
+    <h4 className="text-xl font-bold text-primary mb-6">With DevFlux</h4>
+    ...
+    <p className="text-primary font-bold">⏱️ 15 minutes</p>
+  </div>
+</div>
+```
+
+### Command Button Pattern (from HowSimpleIsIt)
+```tsx
+<button className="px-6 py-3 rounded-full bg-primary/15 border border-primary/40 text-primary font-bold transition-all duration-300 group-hover:bg-primary group-hover:text-white">
+  /command-name
+</button>
+```
 
 ## Naming Conventions
-- **Components**: PascalCase (e.g., `RazorpayPayment`, `BuyNowButton`)
-- **Files**: PascalCase for components (e.g., `BuyNowButton.tsx`)
-- **Hooks**: camelCase with `use` prefix (e.g., `usePayment`)
-- **API Routes**: kebab-case paths (e.g., `/api/payment/create-order`)
-- **CSS Classes**: TailwindCSS utility classes
+- **Components**: PascalCase (e.g., `Hero`, `Pricing`)
+- **Section Files**: PascalCase in `sections/` folder
+- **CSS Classes**: TailwindCSS utilities
+- **Colors**: `text-primary`, `bg-primary/5`, `text-red-400`, `text-green-400`
 
-## Error Handling & Logging Patterns
-- **Frontend**: Try-catch with user-friendly alerts, mutation error states
-- **Backend**: Try-catch with Zod error handling, 400/500 status codes
-- **Logging**: `console.error` for errors, `console.log` for debug
+## Styling Patterns
+- **Glass effect**: `glass` or `glass-card` classes, or `bg-white/[0.02] border border-white/5`
+- **Primary glow**: `shadow-[0_0_20px_rgba(139,92,246,0.2)]`
+- **Section backgrounds**: `bg-black`, `bg-zinc-950/50`, gradients
+- **Responsive**: `md:` breakpoint for desktop, mobile-first
 
 ## Existing Utilities to Reuse
 - `@/components/ui/button` - Button component
-- `@/components/ui/dialog` - Modal dialogs
-- `@/hooks/use-audit` - Pattern for creating mutation hooks
-- `@shared/routes` - API route definitions pattern
-- `@shared/schema` - Zod schema definitions
+- `@/components/BuyNowButton` - Payment trigger button
+- `framer-motion` - All animations
+- `lucide-react` - Icons
 
-## Key Dependencies
-- Razorpay SDK installed
-- Express backend ready for new routes
-- Zod for validation
+## Files to Modify
+1. `Hero.tsx` - Major restructure (add before/after, terminal, remove stats)
+2. `Home.tsx` - Reorder sections, remove Problem/ROICalculator
+3. `HowSimpleIsIt.tsx` - Extract parts to Hero, simplify or remove
+4. `SetupSection.tsx` - Simplify to 3 steps only
+5. `Workflows.tsx` - Make expandable with examples
 
-## Secure File Download Pattern
-- **File Storage**: Store protected files in `server/protected/` directory (not in public)
-- **Token-based Access**: Generate short-lived download tokens after payment verification
-- **Signature Verification**: Use HMAC to sign download tokens with payment_id + timestamp
-- **Express File Serving**: Use `res.download()` for file downloads with proper headers
-- **Security**: Validate token signature and expiry before serving file
+## Files to Delete
+- `ROICalculator.tsx` - Remove entirely
+- `Problem.tsx` - Remove entirely

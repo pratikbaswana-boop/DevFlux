@@ -1,76 +1,147 @@
 import { motion } from "framer-motion";
-import { ArrowRight, BarChart3, Bot, Zap, ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ShoppingCart, X, Check } from "lucide-react";
 import { BuyNowButton } from "@/components/BuyNowButton";
+import { TerminalDemo } from "@/components/TerminalDemo";
+
+const messageBubbleVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1,
+    transition: { type: "spring", stiffness: 200, damping: 20 }
+  }
+};
 
 export function Hero() {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-16">
       {/* Background Gradients */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-primary/20 rounded-full blur-[120px] -z-10" />
       <div className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-secondary/10 rounded-full blur-[100px] -z-10" />
 
-      <div className="container px-4 mx-auto text-center relative z-10">
+      <div className="container px-4 mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto"
+          className="text-center mb-12"
         >
+          {/* Social Proof Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
             </span>
-            <span className="text-sm font-medium text-gray-300">🔥 Proven with 90+ developers</span>
+            <span className="text-sm font-medium text-gray-300">Used by 90 developers shipping 10x faster</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-gray-400">
+          {/* Headlines */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-gray-400">
             Stop Babysitting Your AI. <br className="hidden md:block" />
             <span className="text-primary text-glow">Start Shipping.</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Cursor, Windsurf & Copilot work—when you know how to use them.<br />
-            <span className="text-white font-medium">6 workflows. Instant setup. 90% success rate.</span>
+          <p className="text-xl md:text-2xl text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+            <span className="text-white font-medium">6 workflow commands</span> that turn Cursor & Windsurf into senior developers
           </p>
+        </motion.div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-            <BuyNowButton size="lg" className="h-14 px-8 text-lg bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 rounded-xl border-t border-white/20">
-              <ShoppingCart className="mr-2 h-5 w-5" /> Get the Workflows
-            </BuyNowButton>
-            <a href="#how-it-works">
-              <Button size="lg" variant="outline" className="h-14 px-8 text-lg bg-white/5 border-white/10 hover:bg-white/10 text-white rounded-xl backdrop-blur-sm">
-                See How It Works
-              </Button>
-            </a>
+        {/* Before/After Comparison */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-5xl mx-auto mb-12"
+        >
+          {/* WITHOUT DevFlux - Left Panel */}
+          <div 
+            className="p-6 rounded-2xl"
+            style={{
+              background: "linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.02) 100%)",
+              border: "1px solid rgba(239, 68, 68, 0.2)"
+            }}
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <X className="w-5 h-5 text-red-400" />
+              <h3 className="text-lg font-bold text-red-400">Without DevFlux</h3>
+            </div>
+            <div className="space-y-3 font-mono text-sm">
+              <motion.div variants={messageBubbleVariants} initial="hidden" animate="visible" transition={{ delay: 0.4 }} className="bg-white/5 rounded-lg px-3 py-2">
+                <span className="text-gray-400">Dev:</span> <span className="text-white">"Fix this payment bug"</span>
+              </motion.div>
+              <motion.div variants={messageBubbleVariants} initial="hidden" animate="visible" transition={{ delay: 0.8 }} className="bg-white/5 rounded-lg px-3 py-2">
+                <span className="text-gray-500">AI:</span> <span className="text-gray-400">"Maybe check the database connection?"</span>
+              </motion.div>
+              <motion.div variants={messageBubbleVariants} initial="hidden" animate="visible" transition={{ delay: 1.2 }} className="bg-white/5 rounded-lg px-3 py-2">
+                <span className="text-gray-400">Dev:</span> <span className="text-white">"That's not it..."</span>
+              </motion.div>
+              <motion.div variants={messageBubbleVariants} initial="hidden" animate="visible" transition={{ delay: 1.6 }} className="bg-white/5 rounded-lg px-3 py-2">
+                <span className="text-gray-500">AI:</span> <span className="text-gray-400">"Could be a caching issue?"</span>
+              </motion.div>
+            </div>
+            <div className="mt-4 pt-4 border-t border-red-500/20">
+              <p className="text-red-400 font-bold">⏱️ 3 hours of guessing</p>
+              <p className="text-gray-500 text-sm">❌ Still no root cause</p>
+            </div>
+          </div>
+
+          {/* WITH DevFlux - Right Panel */}
+          <div 
+            className="p-6 rounded-2xl"
+            style={{
+              background: "linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(34, 197, 94, 0.02) 100%)",
+              border: "1px solid rgba(34, 197, 94, 0.3)",
+              boxShadow: "0 0 30px rgba(34, 197, 94, 0.1)"
+            }}
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <Check className="w-5 h-5 text-green-400" />
+              <h3 className="text-lg font-bold text-green-400">With DevFlux</h3>
+            </div>
+            <div className="space-y-3 font-mono text-sm">
+              <motion.div variants={messageBubbleVariants} initial="hidden" animate="visible" transition={{ delay: 0.5 }} className="bg-white/5 rounded-lg px-3 py-2">
+                <span className="text-gray-400">Dev:</span> <span className="text-primary font-bold">/complex-issue</span> <span className="text-white">+ description</span>
+              </motion.div>
+              <motion.div variants={messageBubbleVariants} initial="hidden" animate="visible" transition={{ delay: 0.9 }} className="bg-white/5 rounded-lg px-3 py-2">
+                <span className="text-primary font-bold">AI:</span> <span className="text-gray-300">[Systematic 5-step analysis]</span>
+              </motion.div>
+              <motion.div variants={messageBubbleVariants} initial="hidden" animate="visible" transition={{ delay: 1.3 }} className="bg-white/5 rounded-lg px-3 py-2">
+                <span className="text-white">"Root cause: Race condition at line 247"</span>
+              </motion.div>
+              <motion.div variants={messageBubbleVariants} initial="hidden" animate="visible" transition={{ delay: 1.7 }} className="bg-green-500/10 rounded-lg px-3 py-2">
+                <span className="text-green-400">"Here's the fix + tests"</span>
+              </motion.div>
+            </div>
+            <div className="mt-4 pt-4 border-t border-green-500/20">
+              <p className="text-green-400 font-bold">⏱️ 15 minutes</p>
+              <p className="text-white text-sm font-medium">✅ Done. Verified. Tested.</p>
+            </div>
           </div>
         </motion.div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {[
-            { icon: Zap, label: "Efficiency Boost", value: "300%", color: "text-yellow-400" },
-            { icon: Bot, label: "Tool Adoption", value: "92%", color: "text-primary" },
-            { icon: BarChart3, label: "Faster Shipping", value: "10x", color: "text-green-400" },
-          ].map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + i * 0.1 }}
-              className="glass p-6 rounded-2xl flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300"
-            >
-              <div className={`p-3 rounded-xl bg-white/5 ${stat.color}`}>
-                <stat.icon className="w-8 h-8" />
-              </div>
-              <div className="text-left">
-                <div className={`text-3xl font-display font-bold ${stat.color}`}>{stat.value}</div>
-                <div className="text-sm text-gray-400">{stat.label}</div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {/* Terminal Demo */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mb-12"
+        >
+          <TerminalDemo />
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="text-center"
+        >
+          <BuyNowButton size="lg" className="h-16 px-10 text-xl bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 rounded-xl border-t border-white/20">
+            <ShoppingCart className="mr-2 h-6 w-6" /> Get 6 Workflows - ₹899
+          </BuyNowButton>
+          <p className="mt-4 text-sm text-gray-500">One-time payment • Lifetime access • Works with Cursor, Windsurf & Claude</p>
+        </motion.div>
       </div>
     </section>
   );

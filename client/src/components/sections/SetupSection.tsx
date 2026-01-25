@@ -1,25 +1,25 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { FolderArchive, FolderOpen, Zap, Copy, Check } from "lucide-react";
+import { Download, FolderOpen, Zap, Copy, Check } from "lucide-react";
 
 const steps = [
   {
     num: "01",
-    icon: FolderArchive,
-    title: "Extract ZIP",
-    desc: "Unzip the downloaded package",
+    icon: Download,
+    title: "Download ZIP",
+    desc: "Get the workflow files after purchase",
   },
   {
     num: "02",
     icon: FolderOpen,
     title: "Drop in Folder",
-    desc: "Copy .md files to your IDE's workflow directory",
+    desc: "Copy to your IDE's workflow directory",
   },
   {
     num: "03",
     icon: Zap,
-    title: "Type & Go!",
-    desc: "Type /quick-fix and describe your problem",
+    title: "Type Command, Ship Code",
+    desc: "Type /quick-fix and watch the magic",
   },
 ];
 
@@ -167,10 +167,10 @@ export function SetupSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-            Setup in <span className="text-primary">Seconds</span>
+            3 Steps. <span className="text-primary">2 Minutes.</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            From purchase to first workflow in under 2 minutes
+            No training. No configuration. No API keys.
           </p>
         </motion.div>
 

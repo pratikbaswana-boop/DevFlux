@@ -635,3 +635,303 @@ const thankYouVariants = {
 3. Create feedback cards grid with hover animations
 4. Connect to feedback API
 5. Add thank you state and auto-close
+
+---
+
+## Landing Page Restructure for 2-Second Clarity
+
+### Story Goal
+Restructure the DevFlux landing page so visitors understand exactly what DevFlux does within 2 seconds of landing. Current page requires 8+ sections to scroll through before understanding the product.
+
+---
+
+### Components
+
+#### New Components
+| Component | Path | Description |
+|-----------|------|-------------|
+| `TerminalDemo` | `client/src/components/TerminalDemo.tsx` | Animated terminal showing /quick-fix command in action |
+| `CommandsSection` | `client/src/components/sections/CommandsSection.tsx` | 6 commands grid with expandable examples |
+| `ProofSection` | `client/src/components/sections/ProofSection.tsx` | Before/After results + FyndFox case study |
+
+#### Modified Components
+| Component | Path | Changes |
+|-----------|------|---------|
+| `Hero.tsx` | `client/src/components/sections/Hero.tsx` | Major restructure - add before/after, terminal, remove stats |
+| `Home.tsx` | `client/src/pages/Home.tsx` | Reorder sections, remove Problem/ROICalculator/Guarantee |
+| `SetupSection.tsx` | `client/src/components/sections/SetupSection.tsx` | Simplify to 3 steps only |
+| `Pricing.tsx` | `client/src/components/sections/Pricing.tsx` | Minor copy updates |
+
+#### Components to Delete
+| Component | Path | Reason |
+|-----------|------|--------|
+| `ROICalculator.tsx` | `client/src/components/sections/ROICalculator.tsx` | Remove calculator entirely |
+| `Problem.tsx` | `client/src/components/sections/Problem.tsx` | Remove negative section |
+| `HowSimpleIsIt.tsx` | `client/src/components/sections/HowSimpleIsIt.tsx` | Content moved to Hero and CommandsSection |
+
+---
+
+### New Page Structure
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ HERO (Above the fold - CRITICAL)                            │
+│ ┌─────────────────────────────────────────────────────────┐ │
+│ │ Social proof badge: "Used by 90 developers..."          │ │
+│ │                                                         │ │
+│ │ "Stop Babysitting Your AI. Start Shipping."             │ │
+│ │ "6 workflow commands that turn Cursor & Windsurf        │ │
+│ │  into senior developers"                                │ │
+│ │                                                         │ │
+│ │ ┌──────────────────┐  ┌──────────────────┐             │ │
+│ │ │ WITHOUT DevFlux  │  │ WITH DevFlux     │             │ │
+│ │ │ (red/bad)        │  │ (green/good)     │             │ │
+│ │ │ 3 hours wasted   │  │ 15 min done      │             │ │
+│ │ └──────────────────┘  └──────────────────┘             │ │
+│ │                                                         │ │
+│ │ [Terminal Demo: /quick-fix animation]                   │ │
+│ │                                                         │ │
+│ │ [Get 6 Workflows - ₹899]                                │ │
+│ └─────────────────────────────────────────────────────────┘ │
+├─────────────────────────────────────────────────────────────┤
+│ 6 COMMANDS SECTION                                          │
+│ "6 Commands That Actually Work"                             │
+│ Grid of 6 expandable command cards                          │
+├─────────────────────────────────────────────────────────────┤
+│ HOW IT WORKS (3 steps)                                      │
+│ 1. Download ZIP  2. Drop in folder  3. Type command, ship   │
+│ [Terminal visual]                                           │
+├─────────────────────────────────────────────────────────────┤
+│ PROOF SECTION                                               │
+│ Before/After 90-person team results                         │
+│ FyndFox case study                                          │
+├─────────────────────────────────────────────────────────────┤
+│ PRICING                                                     │
+│ Single price card - ₹899 one-time                           │
+├─────────────────────────────────────────────────────────────┤
+│ FAQ (minimal)                                               │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Hero Section Design
+
+#### Structure
+```tsx
+<section className="relative min-h-screen flex items-center">
+  {/* Background gradients */}
+  
+  <div className="container">
+    {/* Social proof badge */}
+    <Badge>Used by 90 developers shipping 10x faster</Badge>
+    
+    {/* Headlines */}
+    <h1>Stop Babysitting Your AI. Start Shipping.</h1>
+    <p>6 workflow commands that turn Cursor & Windsurf into senior developers</p>
+    
+    {/* Before/After Comparison - MOVED FROM HowSimpleIsIt */}
+    <BeforeAfterComparison />
+    
+    {/* Terminal Demo - NEW */}
+    <TerminalDemo />
+    
+    {/* CTA with price */}
+    <BuyNowButton>Get 6 Workflows - ₹899</BuyNowButton>
+  </div>
+</section>
+```
+
+#### Before/After Comparison (Chat Style)
+```
+┌─────────────────────────┐  ┌─────────────────────────┐
+│ WITHOUT DevFlux         │  │ WITH DevFlux            │
+│ (red border/bg)         │  │ (green/primary border)  │
+├─────────────────────────┤  ├─────────────────────────┤
+│ Dev: "Fix payment bug"  │  │ Dev: /complex-issue     │
+│ AI: "Check database?"   │  │ + description           │
+│ Dev: "That's not it..." │  │                         │
+│ AI: "Caching issue?"    │  │ AI: [5-step analysis]   │
+│ Dev: "Wrong again"      │  │ "Root cause: line 247"  │
+│                         │  │ "Here's fix + tests"    │
+├─────────────────────────┤  ├─────────────────────────┤
+│ ⏱️ 3 hours of guessing  │  │ ⏱️ 15 minutes           │
+│ ❌ Still no root cause  │  │ ✅ Done. Verified.      │
+└─────────────────────────┘  └─────────────────────────┘
+```
+
+#### Terminal Demo Animation
+```tsx
+// Auto-playing terminal showing /quick-fix in action
+const terminalSequence = [
+  { type: "prompt", text: "> " },
+  { type: "command", text: "/quick-fix", delay: 100 },
+  { type: "newline" },
+  { type: "input", text: '"Login button not working after deploy"', delay: 50 },
+  { type: "newline" },
+  { type: "output", text: "🔍 Analyzing...", delay: 500 },
+  { type: "output", text: "✓ Found: onClick handler missing in Button.tsx:42", delay: 800 },
+  { type: "output", text: "✓ Fix applied. Tests passing.", delay: 500 },
+  { type: "output", text: "⏱️ Total: 2 minutes", delay: 300 },
+];
+```
+
+---
+
+### Commands Section Design
+
+#### 6 Commands Grid
+```tsx
+const commands = [
+  {
+    command: "/quick-fix",
+    title: "Quick Fix",
+    oneLiner: "Known bugs → 15 min instead of 2 hours",
+    timeSaved: "Save 1.75 hours per bug",
+    example: "Login button broken after deploy",
+    color: "yellow"
+  },
+  {
+    command: "/complex-issue",
+    title: "Complex Issues", 
+    oneLiner: "Mystery bugs → 1 day instead of 1 week",
+    timeSaved: "Save 4 senior dev days",
+    example: "Payment fails randomly, 1 in 20 transactions",
+    color: "blue"
+  },
+  {
+    command: "/story",
+    title: "Story Implementation",
+    oneLiner: "New features → 1 day instead of 3 days",
+    timeSaved: "Save 2 days, better quality",
+    example: "Add user authentication with OAuth",
+    color: "purple"
+  },
+  {
+    command: "/refactor",
+    title: "Big Refactors",
+    oneLiner: "10+ file changes → 2 days instead of 5",
+    timeSaved: "Save 3 days, less risk",
+    example: "Migrate from REST to GraphQL",
+    color: "orange"
+  },
+  {
+    command: "/tests",
+    title: "Test Coverage",
+    oneLiner: "Full coverage → 45 min instead of 4 hours",
+    timeSaved: "Save 3.25 hours",
+    example: "Write tests for payment module",
+    color: "green"
+  },
+  {
+    command: "/upgrade",
+    title: "Version Upgrades",
+    oneLiner: "Dependencies → 3 hours instead of 2 days",
+    timeSaved: "Save 1.5 days",
+    example: "Upgrade React 17 to React 18",
+    color: "red"
+  }
+];
+```
+
+#### Expandable Card Design
+```
+┌─────────────────────────────────────┐
+│ /quick-fix                    [+]   │
+│ Known bugs → 15 min instead of 2 hr │
+└─────────────────────────────────────┘
+         ↓ (on click/expand)
+┌─────────────────────────────────────┐
+│ /quick-fix                    [-]   │
+│ Known bugs → 15 min instead of 2 hr │
+├─────────────────────────────────────┤
+│ Example:                            │
+│ "Login button broken after deploy"  │
+│                                     │
+│ What happens:                       │
+│ • AI gathers context automatically  │
+│ • Finds root cause with evidence    │
+│ • Proposes minimal fix              │
+│ • Generates tests                   │
+└─────────────────────────────────────┘
+```
+
+---
+
+### Definition of Done
+- [ ] Hero shows before/after comparison above the fold
+- [ ] Terminal demo animation plays automatically
+- [ ] CTA shows price: "Get 6 Workflows - ₹899"
+- [ ] Social proof updated: "Used by 90 developers shipping 10x faster"
+- [ ] 6 Commands section with expandable cards
+- [ ] How It Works simplified to 3 steps
+- [ ] Proof section with 90-person team results + FyndFox
+- [ ] ROICalculator removed
+- [ ] Problem section removed
+- [ ] Guarantee section removed
+- [ ] Mobile responsive (before/after stacks vertically)
+- [ ] Red/green color coding consistent
+
+---
+
+### Decisions Log
+| Decision | Rationale |
+|----------|-----------|
+| Move before/after to hero | Most powerful asset, needs to be above fold |
+| Create terminal demo | Shows product in action, removes doubt |
+| Show price in CTA | Filters serious buyers, reduces friction |
+| Remove calculator | Too complex, buried too deep |
+| Remove problem section | Negative, makes people read too much |
+| 6 sections total | Simplified structure for clarity |
+
+---
+
+### Do Not Touch List
+- Payment/Razorpay integration (out of scope)
+- Backend API routes
+- Database schema
+- PaymentStatusModal
+- BuyNowButton payment logic
+
+---
+
+### Rollback Points
+1. **After Hero restructure**: Can revert Hero.tsx
+2. **After new sections**: Can revert CommandsSection, ProofSection
+3. **After Home.tsx changes**: Can restore original section order
+4. **After deletions**: Git history has Problem.tsx, ROICalculator.tsx
+
+---
+
+### Implementation Phases
+
+**Phase 8A: Create New Components**
+1. Create `TerminalDemo.tsx` - animated terminal component
+2. Create `CommandsSection.tsx` - 6 commands grid with expandable cards
+3. Create `ProofSection.tsx` - before/after results + FyndFox
+
+**Phase 8B: Restructure Hero**
+1. Remove stats cards from Hero
+2. Add before/after comparison (from HowSimpleIsIt)
+3. Add TerminalDemo component
+4. Update copy (subheadline, social proof, CTA)
+
+**Phase 8C: Update Home.tsx**
+1. Remove Problem section import/usage
+2. Remove ROICalculator import/usage
+3. Remove Guarantee section
+4. Remove inline Comparison section (moved to Hero)
+5. Add CommandsSection
+6. Add ProofSection
+7. Reorder: Hero → Commands → SetupSection → Proof → Pricing → FAQ
+
+**Phase 8D: Simplify SetupSection**
+1. Keep only 3 steps
+2. Keep terminal visual
+3. Remove extra content
+
+**Phase 8E: Cleanup**
+1. Delete ROICalculator.tsx
+2. Delete Problem.tsx
+3. Delete or archive HowSimpleIsIt.tsx
+4. Update navigation links

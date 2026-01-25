@@ -1,14 +1,12 @@
 import { Hero } from "@/components/sections/Hero";
-import { Problem } from "@/components/sections/Problem";
-import { HowSimpleIsIt } from "@/components/sections/HowSimpleIsIt";
+import { CommandsSection } from "@/components/sections/CommandsSection";
 import { SetupSection } from "@/components/sections/SetupSection";
-import { Workflows } from "@/components/sections/Workflows";
-import { ROICalculator } from "@/components/sections/ROICalculator";
+import { ProofSection } from "@/components/sections/ProofSection";
 import { Pricing } from "@/components/sections/Pricing";
 import { FAQ } from "@/components/sections/FAQ";
 import { BuyNowButton } from "@/components/BuyNowButton";
 import { PromoBanner } from "@/components/PromoBanner";
-import { ShieldCheck, Clock, Award, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 
 export default function Home() {
   return (
@@ -23,8 +21,8 @@ export default function Home() {
             <img src="/logo.svg" alt="DevFlux" className="h-10 w-auto" />
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-            <a href="#problems" className="hover:text-white transition-colors">Problems</a>
-            <a href="#solutions" className="hover:text-white transition-colors">Solutions</a>
+            <a href="#commands" className="hover:text-white transition-colors">Commands</a>
+            <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
             <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
           </div>
           <BuyNowButton size="sm" className="bg-white/10 hover:bg-white/20 text-white border border-white/10">
@@ -34,97 +32,28 @@ export default function Home() {
       </nav>
 
       <main>
+        {/* Section 1: Hero (Above fold) */}
         <Hero />
         
-        <div id="problems">
-          <Problem />
+        {/* Section 2: 6 Commands */}
+        <div id="commands">
+          <CommandsSection />
         </div>
 
-        {/* Comparison Section (Inline for simplicity) */}
-        <section className="py-24 bg-zinc-950/50">
-          <div className="container px-4 mx-auto">
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-center mb-16">
-              Real Numbers. <span className="text-primary">90-Person Team.</span>
-            </h2>
-            <div className="grid md:grid-cols-2 gap-0 max-w-5xl mx-auto border border-white/10 rounded-3xl overflow-hidden">
-              <div className="p-12 bg-red-500/5 border-b md:border-b-0 md:border-r border-white/10">
-                <h3 className="text-2xl font-bold text-red-400 mb-8">BEFORE DevFlux</h3>
-                <ul className="space-y-4">
-                  {[
-                    "AI outputs need constant fixing",
-                    "More time debugging than coding",
-                    "\"Works in tutorials, breaks on my codebase\"",
-                    "10% of prompts actually usable",
-                    "Developers avoiding AI tools",
-                    "Shipping slower than before AI"
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-gray-400">
-                      <span className="w-6 h-6 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 text-sm">✕</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="p-12 bg-green-500/5">
-                <h3 className="text-2xl font-bold text-green-400 mb-8">AFTER DevFlux</h3>
-                <ul className="space-y-4">
-                  {[
-                    "AI outputs ship-ready code",
-                    "Devs code, AI assists (not reverse)",
-                    "Works on YOUR codebase, day 1",
-                    "90% success rate on prompts",
-                    "Daily active usage across team",
-                    "10x faster feature delivery"
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-white font-medium">
-                      <span className="w-6 h-6 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 text-sm">✓</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="mt-12 text-center text-gray-400">
-              <p className="text-lg mb-4">🚀 Proof: We built <strong>fyndfox.com</strong> in 2 weeks using these exact workflows.</p>
-            </div>
-          </div>
-        </section>
-
-        <HowSimpleIsIt />
-
-        <SetupSection />
-
-        <div id="solutions">
-          <Workflows />
+        {/* Section 3: How It Works (3 steps) */}
+        <div id="how-it-works">
+          <SetupSection />
         </div>
 
-        <ROICalculator />
+        {/* Section 4: Proof */}
+        <ProofSection />
         
+        {/* Section 5: Pricing */}
         <div id="pricing">
           <Pricing />
         </div>
 
-        {/* Guarantee Section */}
-        <section className="py-24 bg-black">
-          <div className="container px-4 mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                { icon: Award, title: "100% Satisfaction", desc: "Love our audit or get a full refund." },
-                { icon: Clock, title: "14-Day Sprint", desc: "Results delivered in two weeks, flat." },
-                { icon: ShieldCheck, title: "Zero Risk", desc: "No long-term lock-in contracts." },
-              ].map((item, i) => (
-                <div key={i} className="text-center p-6">
-                  <div className="w-16 h-16 rounded-full bg-white/5 mx-auto flex items-center justify-center text-primary mb-6">
-                    <item.icon className="w-8 h-8" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-gray-400">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
+        {/* Section 6: FAQ */}
         <FAQ />
 
         {/* Final CTA */}
@@ -132,13 +61,13 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-black to-primary/20 -z-10" />
           <div className="container px-4 mx-auto text-center">
             <h2 className="text-4xl md:text-6xl font-display font-bold mb-8">
-              Stop Losing Money.<br />Start Here.
+              Stop Prompting.<br />Start Commanding.
             </h2>
             <BuyNowButton size="lg" className="h-16 px-10 text-xl bg-white text-black hover:bg-gray-200 rounded-full font-bold shadow-2xl shadow-white/10">
-              Buy Now <ShoppingCart className="ml-2 h-6 w-6" />
+              Get 6 Workflows - ₹899 <ShoppingCart className="ml-2 h-6 w-6" />
             </BuyNowButton>
             <p className="mt-6 text-sm text-gray-400">
-              Only 2 implementation slots left for this month.
+              One-time payment • Lifetime access • Works with Cursor, Windsurf & Claude
             </p>
           </div>
         </section>
