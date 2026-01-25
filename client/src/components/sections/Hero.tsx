@@ -89,30 +89,29 @@ export function Hero() {
   const [activeTab, setActiveTab] = useState<'without' | 'with'>('without');
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-24 pb-12 md:pb-16">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 md:pt-32 pb-12 md:pb-16">
       {/* Background Gradients */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-primary/20 rounded-full blur-[120px] -z-10" />
       <div className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-secondary/10 rounded-full blur-[100px] -z-10" />
 
       <div className="container px-4 mx-auto relative z-10">
+        {/* Social Proof Badge - FIRST ELEMENT, fully visible */}
+        <div className="flex justify-center mb-6 md:mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 
+                          bg-white/5 border border-white/10 rounded-full
+                          text-xs md:text-sm text-gray-300">
+            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse flex-shrink-0" />
+            <span className="whitespace-nowrap">Used by 90 developers shipping 10x faster</span>
+          </div>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-8 md:mb-12"
         >
-          {/* Social Proof Badge - Issue 2: Visible on mobile */}
-          <div className="flex justify-center mb-4 md:mb-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-              </span>
-              <span className="text-xs md:text-sm font-medium text-gray-300">Used by 90 developers shipping 10x faster</span>
-            </div>
-          </div>
-
-          {/* Headlines - Issue 8: Better font sizes */}
+          {/* Headlines */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-tight mb-4 md:mb-6 bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-gray-400">
             Stop Babysitting Your AI. <br className="hidden sm:block" />
             <span className="text-primary text-glow">Start Shipping.</span>
