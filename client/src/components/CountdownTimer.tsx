@@ -47,21 +47,20 @@ export function CountdownTimer({ targetDate, className = "" }: CountdownTimerPro
   ];
 
   return (
-    <div className={`flex items-center justify-center gap-2 ${className}`}>
-      <Clock className="w-4 h-4 text-primary animate-pulse" />
-      <span className="text-sm text-gray-400 mr-2">Offer ends in:</span>
-      <div className="flex gap-2">
+    <div className={`flex flex-col md:flex-row items-center justify-center gap-2 ${className}`}>
+      <div className="flex items-center gap-2 mb-2 md:mb-0">
+        <Clock className="w-4 h-4 text-primary animate-pulse" />
+        <span className="text-sm text-gray-400">Offer ends in:</span>
+      </div>
+      <div className="flex items-center gap-1 md:gap-2">
         {timeUnits.map((unit, index) => (
-          <div key={unit.label} className="flex items-center gap-1">
-            <div className="bg-primary/10 border border-primary/30 rounded-lg px-2 py-1 min-w-[40px] text-center">
-              <span className="text-lg font-bold text-white font-mono">
+          <div key={unit.label} className="flex flex-col items-center">
+            <div className="bg-primary/10 border border-primary/30 rounded-lg w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+              <span className="text-base md:text-lg font-bold text-white font-mono">
                 {String(unit.value).padStart(2, "0")}
               </span>
             </div>
-            <span className="text-xs text-gray-500">{unit.label}</span>
-            {index < timeUnits.length - 1 && (
-              <span className="text-primary font-bold mx-1">:</span>
-            )}
+            <span className="text-[10px] md:text-xs text-gray-500 mt-1">{unit.label}</span>
           </div>
         ))}
       </div>

@@ -70,3 +70,24 @@
     box-shadow: 0 0 40px -10px rgba(139, 92, 246, 0.3);
   }
 }
+
+/* Global mobile utilities */
+html, body {
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better tap targets on mobile */
+@media (max-width: 768px) {
+  button, a {
+    min-height: 44px;
+  }
+}
+
+/* Safe area padding for notched phones */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}

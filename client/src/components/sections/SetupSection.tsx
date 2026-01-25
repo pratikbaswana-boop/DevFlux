@@ -174,11 +174,39 @@ export function SetupSection() {
           </p>
         </motion.div>
 
-        {/* Steps with Connecting Lines */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0 mb-16 relative">
+        {/* Steps - Mobile: Horizontal scroll, Desktop: Row */}
+        {/* Mobile: Compact horizontal scroll */}
+        <div className="md:hidden overflow-x-auto pb-4 -mx-4 px-4 mb-12">
+          <div className="flex gap-3" style={{ width: 'max-content' }}>
+            {steps.map((step, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.3 }}
+                viewport={{ once: true }}
+                className={`relative p-4 rounded-xl border w-[180px] flex-shrink-0
+                  ${activeStep >= i 
+                    ? "bg-white/[0.05] border-primary/40" 
+                    : "bg-white/[0.03] border-white/[0.08]"
+                  }`}
+              >
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold mb-3
+                  ${activeStep >= i ? "bg-primary text-white" : "bg-zinc-800 text-gray-400"}`}>
+                  {step.num}
+                </div>
+                <step.icon className={`w-5 h-5 mb-2 ${activeStep >= i ? "text-primary" : "text-gray-500"}`} />
+                <h3 className="text-sm font-bold text-white mb-1">{step.title}</h3>
+                <p className="text-xs text-gray-400">{step.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop: Row with connecting lines */}
+        <div className="hidden md:flex items-center justify-center gap-0 mb-16 relative">
           {steps.map((step, i) => (
             <div key={i} className="flex items-center">
-              {/* Step Card */}
               <motion.div
                 initial={{ opacity: 0, y: 30, scale: 0.95 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -191,7 +219,6 @@ export function SetupSection() {
                     : "bg-white/[0.03] border-white/[0.08]"
                   }`}
               >
-                {/* Step Number Badge */}
                 <motion.div
                   className={`absolute -top-3 -left-3 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold
                     ${activeStep >= i ? "bg-primary text-white" : "bg-zinc-800 text-gray-400"}`}
@@ -206,7 +233,6 @@ export function SetupSection() {
                   {step.num}
                 </motion.div>
 
-                {/* Icon */}
                 <motion.div
                   className={`mb-4 ${activeStep >= i ? "text-primary" : "text-gray-500"}`}
                   whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
@@ -219,13 +245,9 @@ export function SetupSection() {
                 <p className="text-sm text-gray-400">{step.desc}</p>
               </motion.div>
 
-              {/* Connecting Arrow with Traveling Dot */}
               {i < steps.length - 1 && (
-                <div className="hidden md:block relative w-16 h-[2px] mx-2">
-                  {/* Base Line */}
+                <div className="relative w-16 h-[2px] mx-2">
                   <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/5" />
-                  
-                  {/* Traveling Dot */}
                   <motion.div
                     className="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_rgba(139,92,246,0.8)]"
                     initial={{ left: "0%" }}

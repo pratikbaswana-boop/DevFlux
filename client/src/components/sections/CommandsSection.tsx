@@ -155,7 +155,7 @@ function CommandCard({ cmd, isExpanded, onToggle }: {
       variants={cardVariants}
       initial="rest"
       whileHover="hover"
-      className="rounded-2xl cursor-pointer overflow-hidden"
+      className="rounded-xl md:rounded-2xl cursor-pointer overflow-hidden"
       style={{
         background: "linear-gradient(135deg, #1A1A2E 0%, #12121A 100%)",
         border: `1px solid rgba(255, 255, 255, 0.1)`,
@@ -163,17 +163,17 @@ function CommandCard({ cmd, isExpanded, onToggle }: {
       }}
       onClick={onToggle}
     >
-      <div className="p-6">
-        <div className="flex items-start justify-between mb-3">
-          <div className="flex items-center gap-3">
+      <div className="p-4 md:p-6">
+        <div className="flex items-start justify-between mb-2 md:mb-3">
+          <div className="flex items-center gap-2 md:gap-3">
             <div 
-              className="p-2 rounded-lg"
+              className="p-1.5 md:p-2 rounded-lg"
               style={{ backgroundColor: `${cmd.color}20` }}
             >
-              <Icon className="w-5 h-5" style={{ color: cmd.color }} />
+              <Icon className="w-4 h-4 md:w-5 md:h-5" style={{ color: cmd.color }} />
             </div>
             <span 
-              className="font-mono font-bold text-lg"
+              className="font-mono font-bold text-sm md:text-lg"
               style={{ color: cmd.color }}
             >
               {cmd.command}
@@ -183,12 +183,12 @@ function CommandCard({ cmd, isExpanded, onToggle }: {
             variants={chevronVariants}
             animate={isExpanded ? "expanded" : "collapsed"}
           >
-            <ChevronDown className="w-5 h-5 text-gray-400" />
+            <ChevronDown className="w-4 h-4 md:w-5 md:h-5 text-gray-400" />
           </motion.div>
         </div>
 
-        <p className="text-gray-300 text-sm mb-2">{cmd.oneLiner}</p>
-        <p className="text-xs text-primary font-medium">{cmd.timeSaved}</p>
+        <p className="text-gray-300 text-xs md:text-sm mb-2">{cmd.oneLiner}</p>
+        <p className="text-[10px] md:text-xs text-primary font-medium">{cmd.timeSaved}</p>
 
         <AnimatePresence>
           {isExpanded && (
@@ -199,18 +199,18 @@ function CommandCard({ cmd, isExpanded, onToggle }: {
               exit="collapsed"
               className="overflow-hidden"
             >
-              <div className="pt-4 border-t border-white/10">
-                <p className="text-xs text-gray-500 mb-2">Example:</p>
-                <p className="text-sm text-white mb-4 font-mono bg-black/30 px-3 py-2 rounded-lg">
+              <div className="pt-3 md:pt-4 border-t border-white/10">
+                <p className="text-[10px] md:text-xs text-gray-500 mb-1 md:mb-2">Example:</p>
+                <p className="text-xs md:text-sm text-white mb-3 md:mb-4 font-mono bg-black/30 px-2 md:px-3 py-1.5 md:py-2 rounded-lg">
                   "{cmd.example}"
                 </p>
                 
-                <p className="text-xs text-gray-500 mb-2">What happens:</p>
-                <ul className="space-y-2">
+                <p className="text-[10px] md:text-xs text-gray-500 mb-1 md:mb-2">What happens:</p>
+                <ul className="space-y-1.5 md:space-y-2">
                   {cmd.details.map((detail, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm text-gray-300">
+                    <li key={i} className="flex items-center gap-2 text-xs md:text-sm text-gray-300">
                       <span 
-                        className="w-1.5 h-1.5 rounded-full"
+                        className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full flex-shrink-0"
                         style={{ backgroundColor: cmd.color }}
                       />
                       {detail}
@@ -249,7 +249,7 @@ export function CommandsSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 max-w-6xl mx-auto">
           {commands.map((cmd, index) => (
             <motion.div
               key={cmd.command}

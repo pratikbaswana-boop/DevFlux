@@ -99,9 +99,9 @@ export function TerminalDemo() {
   }, []);
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-[320px] md:max-w-2xl mx-auto">
       <div 
-        className="rounded-xl overflow-hidden"
+        className="rounded-lg md:rounded-xl overflow-hidden"
         style={{
           background: "linear-gradient(180deg, #1A1A2E 0%, #12121A 100%)",
           border: "1px solid rgba(255, 255, 255, 0.1)",
@@ -113,21 +113,21 @@ export function TerminalDemo() {
         }}
       >
         <div 
-          className="px-4 py-3 flex items-center gap-2"
+          className="px-3 md:px-4 py-2 md:py-3 flex items-center gap-1.5 md:gap-2"
           style={{
             background: "rgba(255, 255, 255, 0.03)",
             borderBottom: "1px solid rgba(255, 255, 255, 0.06)"
           }}
         >
-          <div className="flex gap-2">
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#FF5F56" }} />
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#FFBD2E" }} />
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#27CA40" }} />
+          <div className="flex gap-1.5 md:gap-2">
+            <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full" style={{ backgroundColor: "#FF5F56" }} />
+            <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full" style={{ backgroundColor: "#FFBD2E" }} />
+            <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full" style={{ backgroundColor: "#27CA40" }} />
           </div>
-          <span className="text-xs text-gray-500 font-mono ml-3">Terminal — Cursor</span>
+          <span className="text-[10px] md:text-xs text-gray-500 font-mono ml-2 md:ml-3">Terminal — Cursor</span>
         </div>
 
-        <div className="p-6 font-mono text-sm min-h-[200px] space-y-1">
+        <div className="p-3 md:p-6 font-mono text-xs md:text-sm min-h-[160px] md:min-h-[200px] space-y-1">
           <AnimatePresence mode="sync">
             {displayedLines.map((line, index) => (
               <motion.div
