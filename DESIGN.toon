@@ -1,274 +1,223 @@
 // DESIGN.toon
-// Visitor Analytics Tracking System - Implementation Design
+// Analytics Dashboard with Secret Code Access - Implementation Design
 
-STORY_GOAL: "Capture all visitor data, behavior, and conversion events in database"
+STORY_GOAL: "Create analytics dashboard accessible via secret code in URL, displaying all tracked data with export functionality"
 
 COMPONENTS {
   NEW {
-    // Database Schema
-    "shared/schema.ts" {
-      additions: [
-        "visitorSessions table",
-        "analyticsEvents table", 
-        "insertVisitorSessionSchema",
-        "insertAnalyticsEventSchema"
-      ]
-    }
-    
-    // Server Routes
-    "server/analytics.ts" {
-      description: "Analytics API routes"
-      endpoints: [
-        "POST /api/analytics/session - Create/update session",
-        "POST /api/analytics/event - Track events"
-      ]
-    }
-    
-    // Client Tracking
-    "client/src/hooks/useAnalytics.ts" {
-      description: "Analytics tracking hook"
+    // Dashboard Page
+    "client/src/pages/Dashboard.tsx" {
+      description: "Analytics dashboard page component"
       features: [
-        "Session management (localStorage)",
-        "Event tracking functions",
-        "Automatic page view tracking",
-        "Scroll depth tracking",
-        "Click tracking",
-        "Exit intent detection"
+        "Secret code validation from URL query param",
+        "Display all analytics data in cards/tables",
+        "Time filter (Today, 7 days, 30 days, All time)",
+        "Export functionality (CSV)",
+        "Real-time data refresh (30s interval)",
+        "Dark theme matching landing page"
       ]
     }
     
-    "client/src/components/AnalyticsProvider.tsx" {
-      description: "Provider component that initializes tracking"
+    // Dashboard API Routes
+    "server/dashboard.ts" {
+      description: "Dashboard API routes (protected by secret)"
+      endpoints: [
+        "GET /api/dashboard/stats?secret=CODE - Aggregated stats",
+        "GET /api/dashboard/sessions?secret=CODE - Session data",
+        "GET /api/dashboard/events?secret=CODE - Event data",
+        "GET /api/dashboard/feedback?secret=CODE - Feedback data",
+        "GET /api/dashboard/audits?secret=CODE - Audit requests",
+        "GET /api/dashboard/export/:type?secret=CODE - Export CSV"
+      ]
     }
   }
   
   MODIFIED {
     "shared/routes.ts" {
-      additions: ["analytics API definitions"]
+      additions: ["dashboard API definitions"]
     }
     
     "server/storage.ts" {
-      additions: ["createVisitorSession", "updateVisitorSession", "createAnalyticsEvent"]
+      additions: [
+        "getAllSessions(timeFilter)",
+        "getAllEvents(timeFilter)",
+        "getAllFeedback(timeFilter)",
+        "getAllAudits(timeFilter)",
+        "getAggregatedStats(timeFilter)"
+      ]
     }
     
     "server/routes.ts" {
-      additions: ["registerAnalyticsRoutes(app)"]
+      additions: ["registerDashboardRoutes(app)"]
     }
     
     "client/src/App.tsx" {
-      additions: ["Wrap with AnalyticsProvider"]
+      additions: ["Route for /dashboard"]
     }
   }
 }
 
 DATA_MODEL {
-  // Table 1: Visitor Sessions
+  // EXISTING TABLES (read-only for dashboard)
+  
+  // Table 1: Visitor Sessions (existing)
   visitor_sessions {
-    id: "serial PRIMARY KEY"
-    visitor_id: "text NOT NULL - UUID stored in localStorage"
-    session_id: "text NOT NULL - UUID per session"
-    
-    // Visitor Info
-    utm_source: "text"
-    utm_medium: "text"
-    utm_campaign: "text"
-    utm_content: "text"
-    utm_term: "text"
-    referrer: "text"
-    landing_page: "text"
-    
-    // Device Info
-    device_type: "text - mobile/desktop/tablet"
-    browser: "text"
-    browser_version: "text"
-    os: "text"
-    screen_width: "integer"
-    screen_height: "integer"
-    timezone: "text"
-    language: "text"
-    
-    // Session Data
-    is_returning: "boolean"
-    visit_count: "integer"
-    session_start: "timestamp"
-    session_end: "timestamp"
-    session_duration: "integer - seconds"
-    
-    // Metadata
-    ip_address: "text"
-    user_agent: "text"
-    created_at: "timestamp DEFAULT NOW()"
+    // Already exists - dashboard will READ from this
   }
   
-  // Table 2: Analytics Events
+  // Table 2: Analytics Events (existing)
   analytics_events {
-    id: "serial PRIMARY KEY"
-    visitor_id: "text NOT NULL"
-    session_id: "text NOT NULL"
-    
-    // Event Data
-    event_type: "text NOT NULL - page_view, click, scroll, exit_intent, etc."
-    event_category: "text - conversion, behavior, navigation"
-    event_action: "text - specific action"
-    event_label: "text - additional context"
-    event_value: "integer - numeric value if applicable"
-    
-    // Context
-    page_url: "text"
-    element_id: "text - for clicks"
-    element_text: "text - button/link text"
-    scroll_depth: "integer - percentage"
-    time_on_page: "integer - seconds"
-    
-    // Metadata
-    created_at: "timestamp DEFAULT NOW()"
+    // Already exists - dashboard will READ from this
   }
+  
+  // Table 3: Payment Feedback (existing)
+  payment_feedback {
+    // Already exists - dashboard will READ from this
+  }
+  
+  // Table 4: Audit Requests (existing)
+  audit_requests {
+    // Already exists - dashboard will READ from this
+  }
+  
+  // NO NEW TABLES NEEDED - Dashboard is read-only
 }
 
 API_CONTRACT {
-  // Create/Update Session
-  POST "/api/analytics/session" {
-    input: {
-      visitor_id: "string"
-      session_id: "string"
-      utm_source?: "string"
-      utm_medium?: "string"
-      utm_campaign?: "string"
-      utm_content?: "string"
-      utm_term?: "string"
-      referrer?: "string"
-      landing_page?: "string"
-      device_type?: "string"
-      browser?: "string"
-      browser_version?: "string"
-      os?: "string"
-      screen_width?: "number"
-      screen_height?: "number"
-      timezone?: "string"
-      language?: "string"
-      is_returning?: "boolean"
-      visit_count?: "number"
+  // Dashboard Stats (aggregated metrics)
+  GET "/api/dashboard/stats?secret=CODE&timeFilter=7d" {
+    auth: "Query param 'secret' must match DASHBOARD_SECRET env var"
+    response: {
+      sessions: {
+        total: "number"
+        unique_visitors: "number"
+        returning_visitors: "number"
+        avg_duration: "number (seconds)"
+      }
+      events: {
+        total: "number"
+        by_type: "Record<string, number>"
+      }
+      feedback: {
+        total: "number"
+        by_reason: "Record<string, number>"
+      }
+      audits: {
+        total: "number"
+      }
+      devices: {
+        mobile: "number"
+        desktop: "number"
+        tablet: "number"
+      }
+      browsers: "Record<string, number>"
+      utm_sources: "Record<string, number>"
+      top_referrers: "Array<{referrer: string, count: number}>"
     }
-    response: { success: true, session_id: "string" }
   }
   
-  // Update Session End
-  POST "/api/analytics/session/end" {
-    input: {
-      session_id: "string"
-      session_duration: "number"
-    }
-    response: { success: true }
+  // Raw Sessions Data
+  GET "/api/dashboard/sessions?secret=CODE&timeFilter=7d" {
+    auth: "Query param 'secret' must match DASHBOARD_SECRET env var"
+    response: "Array<VisitorSession>"
   }
   
-  // Track Event
-  POST "/api/analytics/event" {
-    input: {
-      visitor_id: "string"
-      session_id: "string"
-      event_type: "string"
-      event_category?: "string"
-      event_action?: "string"
-      event_label?: "string"
-      event_value?: "number"
-      page_url?: "string"
-      element_id?: "string"
-      element_text?: "string"
-      scroll_depth?: "number"
-      time_on_page?: "number"
-    }
-    response: { success: true }
+  // Raw Events Data
+  GET "/api/dashboard/events?secret=CODE&timeFilter=7d" {
+    auth: "Query param 'secret' must match DASHBOARD_SECRET env var"
+    response: "Array<AnalyticsEvent>"
   }
-}
-
-EVENT_TYPES {
-  // Behavior Events
-  "page_view": "When page loads"
-  "scroll_25": "Scrolled 25%"
-  "scroll_50": "Scrolled 50%"
-  "scroll_75": "Scrolled 75%"
-  "scroll_100": "Scrolled 100%"
-  "time_on_page": "Periodic time updates"
-  "exit_intent": "Mouse moved to close tab"
   
-  // Conversion Events
-  "buy_button_click": "Any Buy Now button clicked"
-  "pricing_view": "Pricing section in viewport"
-  "payment_modal_open": "Payment modal opened"
-  "payment_modal_close": "Payment modal closed without purchase"
+  // Raw Feedback Data
+  GET "/api/dashboard/feedback?secret=CODE&timeFilter=7d" {
+    auth: "Query param 'secret' must match DASHBOARD_SECRET env var"
+    response: "Array<PaymentFeedback>"
+  }
   
-  // Navigation Events
-  "link_click": "Any link clicked"
-  "nav_click": "Navigation item clicked"
-  "cta_click": "CTA button clicked"
+  // Raw Audit Requests
+  GET "/api/dashboard/audits?secret=CODE&timeFilter=7d" {
+    auth: "Query param 'secret' must match DASHBOARD_SECRET env var"
+    response: "Array<AuditRequest>"
+  }
+  
+  // Export CSV
+  GET "/api/dashboard/export/:type?secret=CODE&timeFilter=7d" {
+    auth: "Query param 'secret' must match DASHBOARD_SECRET env var"
+    params: { type: "sessions | events | feedback | audits" }
+    response: "CSV file download"
+  }
 }
 
 IMPLEMENTATION_PHASES {
-  phase_1: "Database Schema" {
-    files: ["shared/schema.ts"]
+  phase_1: "Server Dashboard Routes" {
+    files: ["server/dashboard.ts", "server/routes.ts"]
     tasks: [
-      "Add visitor_sessions table",
-      "Add analytics_events table",
-      "Add insert schemas and types"
+      "Create dashboard.ts with protected API routes",
+      "Add secret validation middleware",
+      "Implement stats aggregation queries",
+      "Implement raw data fetch queries",
+      "Implement CSV export endpoints",
+      "Register dashboard routes in routes.ts"
     ]
   }
   
-  phase_2: "Server Storage & Routes" {
-    files: ["server/storage.ts", "shared/routes.ts", "server/analytics.ts", "server/routes.ts"]
+  phase_2: "Storage Methods" {
+    files: ["server/storage.ts"]
     tasks: [
-      "Add storage methods",
-      "Add API route definitions",
-      "Create analytics routes file",
-      "Register routes"
+      "Add getAllSessions with time filter",
+      "Add getAllEvents with time filter",
+      "Add getAllFeedback with time filter",
+      "Add getAllAudits with time filter",
+      "Add getAggregatedStats method"
     ]
   }
   
-  phase_3: "Client Tracking" {
-    files: ["client/src/hooks/useAnalytics.ts", "client/src/components/AnalyticsProvider.tsx", "client/src/App.tsx"]
+  phase_3: "Dashboard Page" {
+    files: ["client/src/pages/Dashboard.tsx", "client/src/App.tsx"]
     tasks: [
-      "Create useAnalytics hook",
-      "Create AnalyticsProvider",
-      "Integrate into App"
-    ]
-  }
-  
-  phase_4: "Event Integration" {
-    files: ["client/src/components/BuyNowButton.tsx", "client/src/components/sections/Pricing.tsx"]
-    tasks: [
-      "Add conversion tracking to Buy buttons",
-      "Add pricing section view tracking"
+      "Create Dashboard.tsx component",
+      "Add secret validation from URL query param",
+      "Display stats cards (sessions, events, feedback, audits)",
+      "Add time filter dropdown",
+      "Add data tables with raw data",
+      "Add export buttons",
+      "Implement real-time refresh (30s)",
+      "Add route in App.tsx"
     ]
   }
 }
 
 DEFINITION_OF_DONE {
-  - "All visitor sessions captured with full device/UTM info"
-  - "All events tracked and stored in database"
-  - "Session duration calculated on page unload"
-  - "Scroll depth tracked at 25%, 50%, 75%, 100%"
-  - "Buy button clicks tracked"
-  - "Payment modal open/close tracked"
-  - "Exit intent detected and tracked"
-  - "Returning visitors identified"
+  - "Dashboard accessible at /dashboard?secret=CODE"
+  - "Invalid/missing secret redirects to home or shows 404"
+  - "All 4 data sources displayed with meaningful metrics"
+  - "Time filter works (Today, 7 days, 30 days, All time)"
+  - "Export CSV works for each data type"
+  - "Data refreshes every 30 seconds"
+  - "Dark theme matches landing page"
+  - "Runs automatically with website (no separate hosting)"
 }
 
 DECISIONS_LOG {
-  - "Two tables (sessions + events) for normalized data"
-  - "visitor_id in localStorage for cross-session tracking"
-  - "session_id generated fresh each visit"
-  - "Events sent immediately (no batching per user request)"
-  - "No GDPR consent required (per user)"
+  - "Secret code via DASHBOARD_SECRET environment variable"
+  - "URL format: /dashboard?secret=CODE"
+  - "Read-only dashboard (no data modification)"
+  - "CSV export only (no JSON export for simplicity)"
+  - "30 second refresh interval for real-time feel"
+  - "Single page dashboard (no sub-routes)"
 }
 
 DO_NOT_TOUCH {
-  - "Payment flow (payment.ts, BuyNowButton payment logic)"
+  - "Existing analytics tracking (analytics.ts)"
+  - "Payment flow (payment.ts, BuyNowButton)"
   - "Existing feedback system"
   - "Razorpay integration"
   - "Download system"
+  - "Home page and other existing pages"
 }
 
 ROLLBACK_POINTS {
-  - "After Phase 1: Can revert schema changes"
-  - "After Phase 2: Can remove routes"
-  - "After Phase 3: Can remove provider"
+  - "After Phase 1: Remove dashboard.ts and route registration"
+  - "After Phase 2: Remove storage methods"
+  - "After Phase 3: Remove Dashboard.tsx and App.tsx route"
 }

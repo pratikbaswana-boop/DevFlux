@@ -1,16 +1,18 @@
 // CODEBASE_PATTERNS.toon
-// Patterns extracted for Analytics Tracking implementation
+// Patterns extracted for Analytics Dashboard implementation
 
 REFERENCE_FEATURE {
-  name: "payment_feedback"
-  description: "Existing feedback collection system - similar data capture pattern"
+  name: "Home.tsx + analytics.ts"
+  description: "Page structure and API route patterns for dashboard"
   
   FILES {
-    schema: "shared/schema.ts"
-    storage: "server/storage.ts"
+    page_example: "client/src/pages/Home.tsx"
+    api_routes: "server/analytics.ts"
     routes_shared: "shared/routes.ts"
-    routes_server: "server/feedback.ts"
-    main_routes: "server/routes.ts"
+    routes_registration: "server/routes.ts"
+    app_router: "client/src/App.tsx"
+    query_client: "client/src/lib/queryClient.ts"
+    storage: "server/storage.ts"
   }
 }
 
@@ -128,4 +130,56 @@ UTILITIES_TO_REUSE {
   - "createInsertSchema from drizzle-zod"
   - "z from zod"
   - "api pattern from shared/routes.ts"
+  - "apiRequest from client/src/lib/queryClient.ts"
+  - "useQuery from @tanstack/react-query"
+}
+
+DASHBOARD_SPECIFIC_PATTERNS {
+  // Page Component Pattern (from Home.tsx)
+  page_structure {
+    pattern: """
+      export default function PageName() {
+        return (
+          <div className="min-h-screen bg-background text-foreground">
+            {/* Content */}
+          </div>
+        );
+      }
+    """
+  }
+  
+  // Router Pattern (from App.tsx)
+  router {
+    library: "wouter"
+    pattern: """
+      import { Switch, Route } from "wouter";
+      <Switch>
+        <Route path="/path" component={Component} />
+      </Switch>
+    """
+  }
+  
+  // API Route Pattern for GET with query params
+  protected_api {
+    pattern: """
+      app.get('/api/dashboard/data', async (req, res) => {
+        const secret = req.query.secret;
+        if (secret !== process.env.DASHBOARD_SECRET) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        // fetch and return data
+      });
+    """
+  }
+  
+  // Data Fetching Pattern
+  data_fetching {
+    pattern: """
+      const { data, isLoading, error } = useQuery({
+        queryKey: ['/api/endpoint'],
+        queryFn: () => fetch('/api/endpoint').then(r => r.json()),
+        refetchInterval: 30000, // for real-time
+      });
+    """
+  }
 }

@@ -7,6 +7,7 @@ import { registerPaymentRoutes } from "./payment";
 import { registerDownloadRoutes } from "./download";
 import { registerFeedbackRoutes } from "./feedback";
 import { registerAnalyticsRoutes } from "./analytics";
+import { registerDashboardRoutes } from "./dashboard";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -24,6 +25,9 @@ export async function registerRoutes(
   
   // Register analytics routes
   registerAnalyticsRoutes(app);
+  
+  // Register dashboard routes
+  registerDashboardRoutes(app);
   
   app.post(api.audit.create.path, async (req, res) => {
     try {
