@@ -206,7 +206,7 @@ export function Hero() {
         >
           <div className="max-w-[320px] md:max-w-none mx-auto">
             <BuyNowButton size="lg" className="w-full md:w-auto h-14 md:h-16 px-6 md:px-10 text-lg md:text-xl bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 rounded-xl border-t border-white/20">
-              <ShoppingCart className="mr-2 h-5 w-5 md:h-6 md:w-6" /> Get 6 Workflows - $11
+              <ShoppingCart className="mr-2 h-5 w-5 md:h-6 md:w-6" /> Get 6 Workflows - $9
             </BuyNowButton>
           </div>
           <p className="mt-3 md:mt-4 text-xs md:text-sm text-gray-500">One-time payment • Lifetime access • Works with Cursor, Windsurf & Claude</p>

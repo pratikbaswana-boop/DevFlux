@@ -64,7 +64,7 @@ export default function Home() {
               Stop Prompting.<br />Start Commanding.
             </h2>
             <BuyNowButton size="lg" className="h-16 px-10 text-xl bg-white text-black hover:bg-gray-200 rounded-full font-bold shadow-2xl shadow-white/10">
-              Get 6 Workflows - $11 <ShoppingCart className="ml-2 h-6 w-6" />
+              Get 6 Workflows - $9 <ShoppingCart className="ml-2 h-6 w-6" />
             </BuyNowButton>
             <p className="mt-6 text-sm text-gray-400">
               One-time payment • Lifetime access • Works with Cursor, Windsurf & Claude
