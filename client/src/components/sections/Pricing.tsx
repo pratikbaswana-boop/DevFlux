@@ -66,9 +66,9 @@ export function Pricing() {
                 <span className="text-gray-400">One-Time Payment / Lifetime Access</span>
               </div>
               <div className="flex items-center justify-center gap-3 mb-2">
-                <span className="text-2xl text-gray-500 line-through">$15</span>
+                <span className="text-2xl text-gray-500 line-through">$19</span>
                 <div className="text-6xl font-bold text-white">$9</div>
-                <span className="bg-green-500/20 text-green-400 text-sm font-bold px-2 py-1 rounded-full">40% OFF</span>
+                <span className="bg-green-500/20 text-green-400 text-sm font-bold px-2 py-1 rounded-full">53% OFF</span>
               </div>
               <p className="text-gray-400 mb-4">Scale your team without scaling costs</p>
               <CountdownTimer targetDate={OFFER_END_DATE} />
