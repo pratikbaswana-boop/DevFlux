@@ -25,7 +25,7 @@ export function BuyNowButton({
   className,
   size = "default",
   variant = "default",
-  amount = 89900,
+  amount = 1100,
   productName = "DevFlux Subscription",
 }: BuyNowButtonProps) {
   const [loading, setLoading] = useState(false);
@@ -56,7 +56,7 @@ export function BuyNowButton({
     try {
       const orderData = await createOrder.mutateAsync({
         amount: amount,
-        currency: "INR",
+        currency: "USD",
         receipt: `receipt_${Date.now()}`,
         notes: {
           product: productName,

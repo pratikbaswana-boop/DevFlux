@@ -12,13 +12,13 @@ export function registerPaymentRoutes(app: Express) {
   // Create Order
   app.post("/api/payment/create-order", async (req: Request, res: Response) => {
     try {
-      const { amount, currency = "INR", receipt, notes = {} } = req.body;
+      const { amount, currency = "USD", receipt, notes = {} } = req.body;
 
       // Validation
       if (!amount || amount < 100) {
         return res.status(400).json({
           success: false,
-          error: "Amount must be at least 100 paise (₹1)",
+          error: "Amount must be at least 100 cents ($1)",
         });
       }
 
