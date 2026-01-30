@@ -47,15 +47,24 @@ export function registerDashboardRoutes(app: Express) {
       const sessionsQuery = dateFilter
         ? db.select().from(visitorSessions).where(gte(visitorSessions.createdAt, dateFilter))
         : db.select().from(visitorSessions);
-      const sessions = await sessionsQuery;
+      const allSessions = await sessionsQuery;
 
-      const uniqueVisitors = new Set(sessions.map(s => s.visitorId)).size;
+      // Deduplicate by IP address - keep only first session per unique IP
+      const seenIPs = new Set<string>();
+      const sessions = allSessions.filter(s => {
+        const ip = s.ipAddress || s.visitorId; // fallback to visitorId if no IP
+        if (seenIPs.has(ip)) return false;
+        seenIPs.add(ip);
+        return true;
+      });
+
+      const uniqueVisitors = sessions.length; // Now this is unique IPs
       const returningVisitors = sessions.filter(s => s.isReturning).length;
       const avgDuration = sessions.length > 0
         ? sessions.reduce((sum, s) => sum + (s.sessionDuration || 0), 0) / sessions.length
         : 0;
 
-      // Device breakdown
+      // Device breakdown (unique IPs only)
       const devices = { mobile: 0, desktop: 0, tablet: 0 };
       sessions.forEach(s => {
         const type = s.deviceType?.toLowerCase() || "desktop";
@@ -64,21 +73,21 @@ export function registerDashboardRoutes(app: Express) {
         else devices.desktop++;
       });
 
-      // Browser breakdown
+      // Browser breakdown (unique IPs only)
       const browsers: Record<string, number> = {};
       sessions.forEach(s => {
         const browser = s.browser || "Unknown";
         browsers[browser] = (browsers[browser] || 0) + 1;
       });
 
-      // UTM sources
+      // UTM sources (unique IPs only)
       const utmSources: Record<string, number> = {};
       sessions.forEach(s => {
         const source = s.utmSource || "Direct";
         utmSources[source] = (utmSources[source] || 0) + 1;
       });
 
-      // Top referrers
+      // Top referrers (unique IPs only)
       const referrerCounts: Record<string, number> = {};
       sessions.forEach(s => {
         const referrer = s.referrer || "Direct";
@@ -121,8 +130,8 @@ export function registerDashboardRoutes(app: Express) {
 
       res.json({
         sessions: {
-          total: sessions.length,
-          uniqueVisitors,
+          total: allSessions.length,
+          uniqueIPs: sessions.length,
           returningVisitors,
           avgDuration: Math.round(avgDuration),
         },
